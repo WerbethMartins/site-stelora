@@ -1,0 +1,49 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
+// Imagens
+import hamburguer from '../assets/img/menu-hamburguer(white).png';
+import close from '../assets/img/icons8-excluir-30.png';
+import shoppingBag from '../assets/img/shopping-bag (white heart).png';
+
+function Header(){
+
+    // Variáveis de estado
+    const [ menuOpen, setMenuOpen ] = useState(false);
+
+    // Função para alternar a visibilidade do menu em dispositivos móveis
+    const toggleMenu = () =>{
+         setMenuOpen(!menuOpen);
+    };
+
+    return (
+        <nav>
+            <div className="icon-group">
+                <div className="menu_hamburguer" onClick={toggleMenu}>
+                    <img src={menuOpen ? close : hamburguer} alt="Menu" className="nav_icon" />
+                </div>
+                <div className="shopping_bag">
+                    <img src={shoppingBag} alt="Carrinho de Compras" className="nav_icon" />
+                </div>
+            </div>
+
+            {menuOpen && (
+                <div className="menu_links">
+                        <ul>
+                            <li><Link to="/">
+                                Home
+                            </Link></li>
+                            <li><Link to="/produtos">
+                                Catalogo
+                            </Link></li>
+                            <li><Link to="/modelos">
+                                3D Modelos
+                            </Link></li>
+                        </ul>
+                </div>
+            )}
+        </nav>
+    )
+}
+
+export default Header;
