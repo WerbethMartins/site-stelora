@@ -1,0 +1,131 @@
+/* --- Seção Hero (A página toda) --- */
+.hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-top: 60px;
+    width: 100%;
+    height: 100vh;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+
+    & .hero__container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 24px;
+        width: 100%;
+        box-sizing: border-box;
+        text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+    }
+}
+
+
+/* --- Badge "Exclusivo" --- */
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.034);
+  backdrop-filter: blur(8px); 
+  padding: 6px 12px;
+  margin: 5px 0;
+  gap: 8px;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+}
+
+.hero__badge-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.hero__badge-text {
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* --- Textos --- */
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+}
+
+.hero__title {
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.hero__subtitle {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* --- Botão --- */
+.hero__actions {
+  width: 100%;
+  margin-top: 8px;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+}
+
+.hero__button {
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.123);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px;
+    width: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.hero__button:active {
+  background-color: #e03b7f; /* Efeito visual de clique no celular */
+}
+
+.hero_footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 8px;
+    height: 100%;
+
+    & .hero_footer_item {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      background-color: rgb(252, 244, 244);
+      padding: 5px;
+      width: 100%;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+      text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+
+      &  .item {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 2px;
+        padding: 2px;
+        margin: 2px;
+      }
+    }
+}

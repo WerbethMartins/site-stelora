@@ -3,21 +3,19 @@ import './App.css'
 // Router
 import { Routes, Route } from 'react-router-dom';
 
-// Components
-import Header from './components/Main_header';
 
 // Pages
 import Home from './pages/Home';
+import Catalog from './pages/Catalog';
 
 
 function App() {
   return (
-      <div>
-        <Header />
-
-        <main style={{ padding: '16px' }}>
+      <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column' }}>
+        <main style={{ flex: 1, width: '100%' }}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/catalog" element={<Catalog />} />
           </Routes>
         </main>
       </div>

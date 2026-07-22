@@ -33,7 +33,7 @@ function Header(){
                             <li><Link to="/">
                                 Home
                             </Link></li>
-                            <li><Link to="/produtos">
+                            <li><Link to="/catalog">
                                 Catalogo
                             </Link></li>
                             <li><Link to="/modelos">
