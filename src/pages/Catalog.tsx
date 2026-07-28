@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 // Components
@@ -33,6 +33,11 @@ function Catalog() {
 
         return matchesCategory && matchesSearch;
     });
+
+    // Cálculo do preço final com desconto
+    const finalPrice = (price: number, discount: number) => {
+        return (price * (1 - discount / 100)).toFixed(2);
+    };
 
     return (
         <>
@@ -75,7 +80,7 @@ function Catalog() {
 
                 <div className="catalog__grid">
                     {filteredProducts.map((product) => (
-                        <div key={product.id} className="product-card">
+                        <div className="product-card">
                             <div className="product-card__header">
                                 <button type="button" className="product-card__favorite-icon">
                                     <img className="heart_icon" src={heartOutline} alt="Favorite" />
@@ -87,18 +92,27 @@ function Catalog() {
                                 )}
                             </div>
 
-                            <div className="product-card__body">
-                                <img
-                                    src={product.image}
-                                    alt={product.name}
-                                    className="product-card__image"
-                                />
-                            </div>
+                            <Link to={`/checkout/${product.id}`} style={{ textDecoration: 'none' }} key={product.id}>
+                                <div className="product-card__body">
+                                    <img
+                                        src={product.image}
+                                        alt={product.name}
+                                        className="product-card__image"
+                                    />
+                                </div>
+                            </Link>
 
                             <div className="product-card__footer">
                                 <div className="product-card__info">
                                     <h4 className="product-card__name">{product.name}</h4>
-                                    <p className="product-card__price">${product.price}</p>
+                                    <div className="prices_section">
+                                        <p className="product-card__price" style={{ fontSize: "1.1rem" }}>${product.price}</p>
+                                        {product.discount && (
+                                            <p className="product-card__final-price" style={{ fontSize: "1rem" }}>
+                                                ${finalPrice(product.price, product.discount)}
+                                            </p>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>

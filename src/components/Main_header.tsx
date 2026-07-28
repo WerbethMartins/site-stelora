@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+// Components
+import { CartIconWithBadge } from "./CartIconWithBadge";
+
 // Imagens
 import hamburguer from '../assets/img/menu-hamburguer(white).png';
 import close from '../assets/img/icons8-excluir-30.png';
 import shoppingBag from '../assets/img/shopping-bag (white heart).png';
+
+// Context
+import { useCart } from "../context/CartContext";
 
 function Header(){
 
@@ -22,9 +28,13 @@ function Header(){
                 <div className="menu_hamburguer" onClick={toggleMenu}>
                     <img src={menuOpen ? close : hamburguer} alt="Menu" className="nav_icon" />
                 </div>
-                <div className="shopping_bag">
-                    <img src={shoppingBag} alt="Carrinho de Compras" className="nav_icon" />
-                </div>
+                {/* Ícone do carrinho com badge de quantidade de itens */}
+                <Link to={`/shopping-bag/${useCart().totalItemsCount > 0 ? useCart().totalItemsCount : ''}`}>
+                    <div className="shopping_bag">
+                        <CartIconWithBadge />
+                        <img src={shoppingBag} alt="Shopping Bag" className="nav_icon" />
+                    </div>
+                </Link>
             </div>
 
             {menuOpen && (

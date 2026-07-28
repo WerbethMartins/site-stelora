@@ -1,4 +1,3 @@
-import React from 'react';
 
 // Tipagem para as props do componente
 interface CategoriesProps {
