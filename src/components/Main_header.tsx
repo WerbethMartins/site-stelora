@@ -9,11 +9,7 @@ import hamburguer from '../assets/img/menu-hamburguer(white).png';
 import close from '../assets/img/icons8-excluir-30.png';
 import shoppingBag from '../assets/img/shopping-bag (white heart).png';
 
-// Context
-import { useCart } from "../context/CartContext";
-
 function Header(){
-
     // Variáveis de estado
     const [ menuOpen, setMenuOpen ] = useState(false);
 
@@ -29,7 +25,7 @@ function Header(){
                     <img src={menuOpen ? close : hamburguer} alt="Menu" className="nav_icon" />
                 </div>
                 {/* Ícone do carrinho com badge de quantidade de itens */}
-                <Link to={`/shopping-bag/${useCart().totalItemsCount > 0 ? useCart().totalItemsCount : ''}`}>
+                <Link to="/cart" aria-label="Abrir sacola de compras">
                     <div className="shopping_bag">
                         <CartIconWithBadge />
                         <img src={shoppingBag} alt="Shopping Bag" className="nav_icon" />

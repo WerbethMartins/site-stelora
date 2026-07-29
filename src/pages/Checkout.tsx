@@ -5,7 +5,6 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { CartIconWithBadge } from "../components/CartIconWithBadge";
 
 // Images
-import checkoutBg  from "../assets/img/Teste.png";
 import arrow from "../assets/img/white_back.png";
 import heartOutline from "../assets/img/White heart.png";
 import shopping_bag from "../assets/img/shopping-bag.png";
@@ -15,27 +14,29 @@ import less from "../assets/img/minus.png";
 // Mock Products e Context
 import { MOCK_PRODUCTS as PRODUCTS_DATA } from "../data/mockProducts";
 import { useCart } from "../context/CartContext";
+import { useMessage } from "../hooks/useMessage";
 
 function Checkout() {
     // Pega o id vindo da URL (ex: /checkout/1)
     const { id } = useParams();
     const navigate = useNavigate();
     const { addToCart } = useCart();
+    const { showSuccess } = useMessage();
 
     // Busca o produto cujo id coincide com o id da URL
     // Converter para String/Number conforme o tipo do mock
     const product = PRODUCTS_DATA.find((item) => String(item.id) === id);
+    const [quantity, setQuantity] = useState(1);
 
     if (!product) {
-        return 
+        return (
         <div>
             <h2>Produto não encontrado</h2>
-            <Link to="/catalog">Voltar ao catálo</Link>
-        </div>;
+            <Link to="/catalog">Voltar ao catálogo</Link>
+        </div>
+        );
 
     }
-
-    const [quantity, setQuantity] = useState(1);
 
     const handleIncrease = () => setQuantity((prev) => prev + 1);
     const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -43,9 +44,10 @@ function Checkout() {
     // Função para adicionar ao carrinho e redirecionar
     const handleAddToCart = () => {
         addToCart(product, quantity);
+        showSuccess(`${quantity} item(ns) de ${product.name} adicionado(s) à sacola`);
 
         // Redireciona o usuário para a sacola de compras para ver o item adicionado
-        navigate(`/shopping-bag/${product.id}`);
+        navigate("/cart");
     }
 
     // Cálculo de desconto dinâmico se existir (usar number para operações)

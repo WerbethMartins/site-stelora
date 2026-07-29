@@ -3,7 +3,7 @@ import Header from '../components/Main_header';
 
 // Imagens 
 import starIcon from '../assets/img/estrela.png';
-import scentBg from '../assets/img/golden-hour-perfume-bottle-on-the-beach-a-stunning-sunrise-scent-free-photo.jpeg';
+import highlight_background from '../assets/img/Highlight_background.jpg';
 import crownIcon from '../assets/img/crown.png';
 import watch from '../assets/img/stopwatch.png';
 import starLight from "../assets/img/star.png";
@@ -13,7 +13,7 @@ function Home(){
         <>
             <section 
                 className="hero" 
-                style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(${scentBg})` }}
+                style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(${highlight_background})` }}
                 >
 
                 <Header />

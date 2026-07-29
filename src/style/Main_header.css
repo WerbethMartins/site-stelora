@@ -19,7 +19,7 @@ nav {
             border-radius: 50%;
             color: #fff;
             /* Fundo transparente*/
-            background-color: #a5a2a2;
+            background-color: #eb9a21;
             padding: 8px;
             box-shadow: 1px 2px rgba(0, 0, 0, 0.185); 
         } 
@@ -27,7 +27,7 @@ nav {
         & .shopping_bag {
             border: 1px solid #ccc;
             border-radius: 50%;
-            background-color: #a5a2a2;
+            background-color: #eb9a21;
             padding: 8px;
             box-shadow: 1px 2px rgba(0, 0, 0, 0.185);
         }

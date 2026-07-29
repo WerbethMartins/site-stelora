@@ -1,5 +1,4 @@
-import { Link, useParams } from "react-router-dom";
-import { useState } from "react";
+import { Link } from "react-router-dom";
 
 // Images
 import heartBag  from "../assets/img/shopping-bag (white heart).png";
@@ -8,21 +7,13 @@ import productImage from "../assets/img/product_1.png";
 import more from "../assets/img/orange-more-icon.png";
 import less from "../assets/img/less-orange-icon.png";
 
-// Mock Products
-import { MOCK_PRODUCTS as PRODUCTS_DATA } from "../data/mockProducts";
+// Components 
+import { CartIconWithBadge } from "../components/CartIconWithBadge";
+
 import { useCart } from "../context/CartContext";
 
 function Shopping_bag() {
-    const { id } = useParams();
-    const product = PRODUCTS_DATA.find((item) => String(item.id) === id);
-    const [quantity, setQuantity] = useState(1);
     const { cart, updateQuantity } = useCart();
-
-    if(!product) {
-        return (
-            <div>Produto não existe!</div>
-        )
-    }
 
     // Cálculo de desconto dinâmico se existir
     const subtotalNumber = cart.reduce((sum, item) => {
@@ -46,7 +37,7 @@ function Shopping_bag() {
                         </button>
                     </Link>
                     <h4 className="header__title">Shopping Bag</h4>
-                    <button type="button" className="shopping-bag__icon-btn">
+                    <button type="button" className="shopping-bag__icon-btn" aria-label="Sacola vazia">
                         <img className="heart_icon" src={heartBag} alt="Sacola de compra" />
                     </button>
                 </div>
@@ -85,7 +76,8 @@ function Shopping_bag() {
                         </button>
                     </Link>
                     <h4 className="header__title">Shopping Bag</h4>
-                    <button type="button" className="shopping-bag__icon-btn">
+                    <button type="button" className="shopping-bag__icon-btn" aria-label="Itens na sacola">
+                        <CartIconWithBadge />
                         <img className="heart_icon" src={heartBag} alt="Sacola de compra" />
                     </button>
                 </div>
