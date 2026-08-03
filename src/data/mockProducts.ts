@@ -8,6 +8,8 @@ export interface Product {
     image: string;
     category: string;
     type: 'cosmetic' | '3d';
+    enphasis?: boolean;
+    exclusive?: boolean;
     size?: string;
     description?: string;
 }

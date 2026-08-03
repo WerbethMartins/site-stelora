@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Catalog from './pages/Catalog';
 import Checkout from './pages/Checkout';
 import ShoppingBag from './pages/Shopping_bag';
+import ProductForm from './components/ProductForm';
 
 // Context
 import { CartProvider } from './context/CartContext';
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/checkout/:id" element={<Checkout />} />
                 <Route path="/cart" element={<ShoppingBag />} />
                 <Route path="/shopping-bag/:id" element={<ShoppingBag />} />
+                <Route path="/admin/product-form" element={<ProductForm />} />
               </Routes>
             </CartProvider>
           </MessageProvider>

@@ -8,12 +8,21 @@ import crownIcon from '../assets/img/crown.png';
 import watch from '../assets/img/stopwatch.png';
 import starLight from "../assets/img/star.png";
 
+// Mock Products
+import { MOCK_PRODUCTS as PRODUCTS_DATA } from "../data/mockProducts";
+import { Link } from 'react-router-dom';
+
 function Home(){
+
+    // Filtrando produtos com ênfase e exclusividade
+    const exclusiveProduct = PRODUCTS_DATA.find((product) => product.enphasis && product.exclusive);
+    const bgImage = exclusiveProduct?.image || highlight_background;
+
     return (
         <>
             <section 
                 className="hero" 
-                style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(${highlight_background})` }}
+                style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(${bgImage})` }}
                 >
 
                 <Header />
@@ -23,12 +32,14 @@ function Home(){
                     {/* Badge Exclusivo */}
                     <div className="hero__badge">
                         <img src={starIcon} alt="Estrela" className="hero__badge-icon" />
-                        <span className="hero__badge-text">Exclusivo</span>
+                        <span className="hero__badge-text">Edição Exclusiva</span>
                     </div>
 
                     {/* Conteúdo de Texto */}
                     <div className="hero__content">
-                        <h1 className="hero__title">Find Your Signature Scent</h1>
+                        <h1 className="hero__title">
+                            {exclusiveProduct ? exclusiveProduct.name : "Find Your Signature Scent"}
+                        </h1>
                         <p className="hero__subtitle">
                             The right fragrance turns moments into memories. Leave your mark wherever you go!
                         </p>
@@ -36,9 +47,18 @@ function Home(){
 
                     {/* Ação */}
                     <div className="hero__actions">
-                        <button type="button" className="hero__button">
+                        <button type="button" className="hero__explore-btn hero__btn" style={{
+                            backgroundColor: "#eb9a21"
+                        }}>
                             Explore Collection
                         </button>
+                        <Link to="/admin/product-form">
+                            <button type='button' className='hero__sign-btn hero__btn' style={{
+                                backgroundColor: "#e03b7f"
+                            }}>
+                                Adicionar produto
+                            </button>
+                        </Link>
                     </div>
                 </div>
                 <div className='hero_footer'>
