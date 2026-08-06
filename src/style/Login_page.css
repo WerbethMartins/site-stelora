@@ -1,0 +1,106 @@
+.login__section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    padding: 0 10px;
+    margin: 15px 0;
+    width: 100%;
+    height: 100vh;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.250);
+
+    & .title {
+        font-size: 3rem;
+    }
+
+    & .login__form {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 15px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        padding: 10px;
+        width: 100%;
+        box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.250);
+
+        & .form_header {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        & .form_body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            width: 100%;
+
+            & .input-group {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;    
+                gap: 10px;
+                width: 100%;
+
+                input {
+                    border: none;
+                    border-radius: 20px;
+                    padding: 12px;
+                    width: 90%;
+                    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.250);
+                }
+
+                & .input-group__btn {
+                    border: none;
+                    border-radius: 20px;
+                    color: #fff;
+                    background-color: #eb9a21;
+                    padding: 10px;
+                    width: 80%;
+                    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.250);
+                    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.250);
+                }
+            }
+        }
+
+        & .form_footer {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+
+            & .social_login {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                width: 100%;
+
+                & .social_button {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+                    border: none;
+                    border-radius: 20px;
+                    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.250);
+                    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.250);
+                }
+            }
+        }
+    }
+}

@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 // Images
 import bell from "../assets/img/bell.png";
 import arrow from "../assets/img/arrow.png";
+
+// Hooks
 import { useMessage } from "../hooks/useMessage";
 
 // Um esboço rápido de como ficaria a estrutura
@@ -11,7 +13,7 @@ function ProductForm() {
     // Estado para controlar se é exclusivo ou não
     const [isExclusive, setIsExclusive] = useState(false);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
-    const { showSuccess } = useMessage();
+    const { showMessage } = useMessage();
 
     // Função para criar URL da imagem ao criar um novo Produto
     function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
@@ -46,11 +48,17 @@ function ProductForm() {
             enphasis: isExclusive  
         };
 
-        showSuccess("Produto cadastrado com sucesso!");
+        showMessage("Produto cadastrado com sucesso!");
 
         console.log("Produto pronto para o Firebase:", newProduct);
         // Lógica para salvar no Firebase virá aqui...
     };
+
+    const handleSaveProduct = () => {
+        // Aqui você pode adicionar a lógica para salvar o produto no Firebase
+        // Por enquanto, apenas exibimos uma mensagem de sucesso
+        showMessage("Produto cadastrado com sucesso!");
+    }
 
     return (
         <>
@@ -112,7 +120,9 @@ function ProductForm() {
                         Marcar como Produto Exclusivo (Destaque na Home)
                     </label>
 
-                    <button type="submit" className="product-form__btn">Salvar Produto</button>
+                    <button type="submit" className="product-form__btn" onClick={handleSaveProduct}>
+                        Salvar Produto
+                    </button>
                 </form>
             </section>
         </>

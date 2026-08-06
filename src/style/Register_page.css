@@ -1,0 +1,117 @@
+.register-form__section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+
+    & .register-form__top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 5px;
+        margin-top: 10px;
+        width: 100%;
+        text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+
+        & .form__header-title-group {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 70%;
+
+            & .form__icon-btn {
+                border: none;
+                border-radius: 50%;
+                background-color: #fff;
+                width: 40px;
+                height: 40px;
+                box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.250);
+
+                & .form__icon {
+                    border: none;
+                    background-color: none;
+                }
+            }
+        }
+    }
+
+    & .register-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        margin-top: 10px;
+        width: 90%;
+        text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.250);
+
+        & .register-form__header {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        & .register-form__social_register {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            width: 100%;
+
+            & .social_button {
+                display: flex;
+                justify-content: center;
+                border: none;
+                border-radius: 20px;
+                box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.575);
+            }
+        }
+
+        & .register-form__input {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            width: 100%;
+
+            input {
+                border: none;
+                border-radius: 20px;
+                padding: 12px;
+                width: 90%;
+                box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.250);
+            }
+        }
+
+        & .register-form__button-section {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            margin-top: 10px;
+            width: 100%;
+
+            & .button-section__btn {
+                border: none;
+                border-radius: 20px;
+                font-size: 1rem;
+                color: #fff;
+                background-color: #eb9a21;
+                padding: 10px;
+                width: 50%;
+                text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+                box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.575);
+            }
+        }
+    }
+
+}

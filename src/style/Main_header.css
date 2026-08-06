@@ -17,7 +17,7 @@ nav {
         & .menu_hamburguer {
             border: 1px solid #ccc;
             border-radius: 50%;
-            color: #fff;
+            color: #000;
             /* Fundo transparente*/
             background-color: #eb9a21;
             padding: 8px;
@@ -41,7 +41,7 @@ nav {
 
     & .menu_links {
         position: absolute;
-        background-color: #a5a2a2;
+        background-color: #fff;
         border: 1px solid #ccc;
         border-radius: 5px;
         padding: 10px;
@@ -59,8 +59,14 @@ nav {
 
                 & a {
                     text-decoration: none;
-                    color: #fff;
+                    color: #000;
                     font-weight: bold;
+                }
+            }
+
+            & li.active {
+                & a {
+                    color: #eb9a21; 
                 }
             }
         }
