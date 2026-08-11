@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 // Images
@@ -8,12 +7,7 @@ import google from "../assets/img/google.png";
 import facebook from "../assets/img/facebook.png";
 import instagram from "../assets/img/instagram_Color.png";
 
-// Hooks
-import { useMessage } from "../hooks/useMessage";
-
 function forgetPassword_page() {
-    const { showMessage } = useMessage();
-
     return (
         <> 
             <section className="forget-password__section">

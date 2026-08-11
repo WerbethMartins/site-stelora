@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 // Components
 import Categories from "../components/Categories";
+import { useAuth } from "../context/AuthContext";
 
 // Images
 import bell from "../assets/img/bell.png";
@@ -11,7 +12,6 @@ import filter from "../assets/img/filter.png";
 import heartOutline from "../assets/img/White heart.png";
 import arrow from "../assets/img/arrow.png";
 import start from "../assets/img/estrela.png";
-import start2 from "../assets/img/star(2).png";
 
 // Mock Products
 import { MOCK_PRODUCTS as PRODUCTS_DATA } from "../data/mockProducts";
@@ -21,6 +21,7 @@ const categories = ["All", "Best Sellers", "New Arrivals"];
 function Catalog() {
     const [selectedCategory, setSelectedCategory] = useState(categories[0]);
     const [searchQuery, setsearchQuery] = useState("");
+    const { isAdmin } = useAuth();
 
     const handleSelectCategory = (category: string) => {
         setSelectedCategory(category);
@@ -85,8 +86,12 @@ function Catalog() {
                         <div className="product-card">
                             <div className="product-card__header">
                                 <button type="button" className="product-card__favorite-icon">
-                                    <img className="heart_icon product-card__icon" src={heartOutline} alt="Favorite" />
-                                    <img className="star_icon product-card__icon" src={start} alt="Star" />
+                                    {/* Verificação se o usuário é admin */}
+                                    {isAdmin ? (
+                                        <img className="star_icon product-card__icon" src={start} alt="Star" />
+                                    ): (
+                                         <img className="heart_icon product-card__icon" src={heartOutline} alt="Favorite" />
+                                    )}
                                 </button>
                                 {product.discount && (
                                     <span className="product-card__discount-badge">

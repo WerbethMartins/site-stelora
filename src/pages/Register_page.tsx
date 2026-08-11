@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { signInWithGoogleAccessToken, signUp } from "../service/AuthService";
+
+
+// Autenticação com o google
+import CustomGoogleButton from "../components/CustomGoogleButton";  
 
 // Images
 import bell from "../assets/img/bell.png";
 import arrow from "../assets/img/arrow.png";
-import google from "../assets/img/google.png";
 import facebook from "../assets/img/facebook.png";
 import instagram from "../assets/img/instagram_Color.png";
 
@@ -12,23 +16,32 @@ import instagram from "../assets/img/instagram_Color.png";
 import { useMessage } from "../hooks/useMessage";
 
 function Register_page(){
+    const navegate = useNavigate();
     const { showMessage } = useMessage();
+    const [isLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // FormData captura automaticamente todos os inputs que têm o atributo "name"
         const formData = new FormData(e.currentTarget);
+        const name = formData.get("name") as string;
+        const email = formData.get("email") as string;
+        const password = formData.get("password") as string;
 
-        const userRegister = {
-            name: formData.get("name"),
-            email: formData.get("email"),
-            password: formData.get("password"),
-        };
-
-        showMessage("Usuário criado com sucesso!");
-
-        console.log("Usuário pronto para o firebase:", userRegister);
+        try {
+            await signUp(name, email, password);
+            showMessage("Usuário criado com sucesso")
+            navegate("/");
+        }catch(error: any){
+            if(error.code === 'auth/email-already-in-use') {
+                showMessage("Esse email já está em uso")
+                return;
+            }else if(error.code === 'auth/weak-password'){
+                showMessage("A senha deve ter pelo menos 6 caracteres.");
+            } else {
+                showMessage("Algo deu errado.");
+            }
+        }
         
     }
 
@@ -52,10 +65,35 @@ function Register_page(){
                     <div className="register-form__header">
                         <h1>Crie sua conta</h1>
                     </div>
-                    <div className="register-form__social_register">
-                        <button type="button" className="social_button">
-                            <img src={google} alt="Botão do google" />
-                        </button>
+                    <div className="register-form__social-register">
+                        {/* Link para direcionar o usuário se inscrever com sua conta do google */}
+                        <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'none', border: 'none', padding: 0 }}>
+                            <CustomGoogleButton
+                                onSuccess={async (tokenResponse) => {
+                                    console.log("=== TOKEN RECEBIDO ===", tokenResponse);
+
+                                    try {
+                                        if (!tokenResponse.access_token) {
+                                            throw new Error("Access token não veio");
+                                        }
+                                        console.log("Chamando signInWithGoogleAccessToken...");
+                                        const user = await signInWithGoogleAccessToken(tokenResponse.access_token);
+                                        console.log("Usuário logado com sucesso:", user);
+                                        showMessage("Login com Google realizado com sucesso!");
+                                        navegate("/"); // Redireciona para a página inicial após o login bem-sucedido
+                                    } catch (error: any) {
+                                        console.error("=== ERRO NO LOGIN COM GOOGLE ===", error);
+                                        console.error("Código do erro:", error.code);
+                                        console.error("Mensagem:", error.message);
+                                        showMessage("Erro ao entrar com Google: " + (error.message || "Erro desconhecido"));
+                                    }
+                                }}
+                                onError={() => {
+                                    showMessage("Falha na autenticação com Google");
+                                }}
+                            />
+                        </div>
+
                         <button type="button" className="social_button">
                             <img src={facebook} alt="Botão do facebook" />
                         </button>
@@ -65,11 +103,13 @@ function Register_page(){
                     </div>
                     <div className="register-form__input">
                         <input name="name" type="text" placeholder="Nome do Usuário" required />
-                        <input name="email" type="text" placeholder="Email do Usuário" required />
-                        <input name="password" type="text" placeholder="Senha do Usuário" required />
+                        <input name="email" type="email" placeholder="Email do Usuário" required />
+                        <input name="password" type="password" placeholder="Senha do Usuário" required />
                     </div>
                     <div className="register-form__button-section">
-                        <button type="submit"  className="button-section__btn">Registrar</button>
+                        <button type="submit"  className="button-section__btn">
+                            {isLoading ? "Registrando" : "Registrar " }
+                        </button>
                     </div>
                 </form>
             </section>
