@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
 // Components
@@ -11,8 +11,8 @@ import shopping_bag from "../assets/img/shopping-bag.png";
 import more from "../assets/img/plus-sign.png";
 import less from "../assets/img/minus.png";
 
-// Mock Products e Context
-import { MOCK_PRODUCTS as PRODUCTS_DATA } from "../data/mockProducts";
+// Service e Context
+import { type Product, getProducts } from "../service/ProductService";
 import { useCart } from "../context/CartContext";
 import { useMessage } from "../hooks/useMessage";
 
@@ -25,8 +25,22 @@ function Checkout() {
 
     // Busca o produto cujo id coincide com o id da URL
     // Converter para String/Number conforme o tipo do mock
-    const product = PRODUCTS_DATA.find((item) => String(item.id) === id);
+    const [product, setProduct] = useState<Product | null>(null);
     const [quantity, setQuantity] = useState(1);
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const products = await getProducts();
+                const foundProduct = products.find((p) => p.id?.toString() === id);
+                setProduct(foundProduct || null);
+            }catch(error) {
+                console.error("Erro ao buscar produto:", error)
+            }
+        }
+
+        fetchProduct();
+    }, [id]);
 
     if (!product) {
         return (
@@ -43,7 +57,7 @@ function Checkout() {
 
     // Função para adicionar ao carrinho e redirecionar
     const handleAddToCart = () => {
-        addToCart(product, quantity);
+        addToCart(product as unknown as import("../data/mockProducts").Product, quantity);
         showSuccess(`${quantity} item(ns) de ${product.name} adicionado(s) à sacola`);
 
         // Redireciona o usuário para a sacola de compras para ver o item adicionado

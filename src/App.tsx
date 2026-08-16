@@ -9,7 +9,7 @@ import { CartProvider } from "./context/CartContext";
 import { MessageProvider } from "./hooks/useMessage";
 import Catalog from "./pages/Catalog";
 import Checkout from "./pages/Checkout";
-import ForgetPasswordPage from "./pages/Forget-password_page";
+import ForgetPasswordPage from "./pages/ForgetPassword_page";
 import Home from "./pages/Home";
 import Login from "./pages/Login_page";
 import RegisterPage from "./pages/Register_page";

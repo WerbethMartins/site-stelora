@@ -2,19 +2,42 @@ import { Link } from "react-router-dom";
 
 import Header from "../components/Main_header";
 import { useAuth } from "../context/AuthContext";
+import { getProducts, type Product } from "../service/ProductService";
+
+// Images
 import crownIcon from "../assets/img/crown.png";
 import starIcon from "../assets/img/estrela.png";
 import highlightBackground from "../assets/img/Highlight_background.jpg";
 import starLight from "../assets/img/star.png";
 import watch from "../assets/img/stopwatch.png";
+import { useEffect, useState } from "react";
 
-// Mock Products
-import { MOCK_PRODUCTS as PRODUCTS_DATA } from "../data/mockProducts";
 
 function Home() {
     const { isAdmin } = useAuth();
-    const exclusiveProduct = PRODUCTS_DATA.find((product) => product.enphasis && product.exclusive);
-    const bgImage = exclusiveProduct?.image || highlightBackground;
+    const [products, setProducts] = useState<Product[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    // Busca os produtos do Firebase ao carregar a página
+    useEffect(() => {
+        async function fetchHomeProducts(){
+            try {
+                const data = await getProducts();
+                setProducts(data);
+            }catch(error){
+                console.error("Erro ao carregar produto em destaque:", error);
+            }finally {
+                setLoading(false);
+            }
+        }
+
+        fetchHomeProducts();
+    }, []);
+
+    // Encontra o produto marcado como exclusivo/destaque
+    const exclusiveProduct = products.find((product) => product.exclusive)
+
+    const bgImage = exclusiveProduct?.imgExclusive || exclusiveProduct?.image || highlightBackground;
 
     return (
         <section
@@ -36,18 +59,23 @@ function Home() {
                         {exclusiveProduct ? exclusiveProduct.name : "Find Your Signature Scent"}
                     </h1>
                     <p className="hero__subtitle">
-                        The right fragrance turns moments into memories. Leave your mark wherever you go!
+                        {exclusiveProduct?.description 
+                            ? exclusiveProduct.description 
+                            : "The right fragrance turns moments into memories. Leave your mark wherever you go!"
+                        }
                     </p>
                 </div>
 
                 <div className="hero__actions">
-                    <button
-                        type="button"
-                        className="hero__explore-btn hero__btn"
-                        style={{ backgroundColor: "#eb9a21" }}
-                    >
-                        Explore Collection
-                    </button>
+                    <Link to={exclusiveProduct?.id ? `/checkout/${exclusiveProduct.id}` : "/catalog"}>
+                        <button
+                            type="button"
+                            className="hero__explore-btn hero__btn"
+                            style={{ backgroundColor: "#eb9a21" }}
+                        >
+                            {exclusiveProduct ? "Explorar Coleção" : "Produto não existe catalogo"}
+                        </button>
+                    </Link>
 
                     {isAdmin && (
                         <Link to="/catalog">
@@ -56,7 +84,7 @@ function Home() {
                                 className="hero__sign-btn hero__btn"
                                 style={{ backgroundColor: "#e03b7f" }}
                             >
-                                Adicionar produto exclusivo
+                                Gerenciar Destaques
                             </button>
                         </Link>
                     )}

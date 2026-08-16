@@ -5,6 +5,7 @@ import {
     signOut,
     GoogleAuthProvider,
     signInWithCredential,
+    sendPasswordResetEmail
 } from "firebase/auth";
 import { app } from "../configuracao/FirebaseConfig";
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
@@ -104,3 +105,16 @@ export async function signInWithGoogleAccessToken(accessToken: string) {
     throw error;
   }
 }
+
+function sendPasswordReset(email: string) {
+    return sendPasswordResetEmail(auth, email)
+        .then(() => {
+            console.log("Email de redefinição de senha enviado com sucesso");
+        })
+        .catch((error) => {
+            console.error("Erro ao enviar email de redefinição de senha", error);
+            throw error;
+        });
+}
+
+export { sendPasswordReset };
