@@ -11,12 +11,14 @@ import { addProduct } from "../service/ProductService";
 
 // Utils
 import { compressImage } from "../utils/CompressImage";
+import { Loading } from "./Loading";
 
 function ProductForm() {
     // Estado para controlar se é exclusivo ou não
     const [isExclusive] = useState(false);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const { showMessage } = useMessage();
     const navigate = useNavigate();
@@ -38,6 +40,8 @@ function ProductForm() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setLoading(true);
+        setIsSubmitting(true);
 
         if(!imageUrl){
             showMessage("Pro favor, selecione uma imagem para o produto.");
@@ -65,13 +69,21 @@ function ProductForm() {
         try{
             await addProduct(newProduct);
             showMessage("produto cadastrado com sucesso!");
+
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+
             navigate("/catalog")
         }catch(error){
             showMessage("Erro ao cadastrar produto no banco");
         } finally {
+            setLoading(false);
             setIsSubmitting(false);
         }
     };
+
+    if(loading){
+        return <Loading message="Cadastrando produto..." />
+    }
 
     return (
         <>

@@ -7,9 +7,12 @@ interface CategoriesProps {
 }
 
 function Categories({ categories, selectedCategory, onSelectCategory }: CategoriesProps) {
+  const filteredCategories = categories.filter(
+    (cat) => cat.toLowerCase() !== 'all' && cat.toLowerCase() !== 'todos'
+  );
+
   return (
     <div className="categories-bar">
-      {/* Botão para mostrar todos os produtos */}
       <button
         type="button"
         className={`categories-bar__item ${selectedCategory === 'All' ? 'categories-bar__item--active' : ''}`}
@@ -19,7 +22,7 @@ function Categories({ categories, selectedCategory, onSelectCategory }: Categori
       </button>
 
       {/* Renderização dinâmica das categorias */}
-      {categories.map((category) => {
+      {filteredCategories.map((category) => {
         const isActive = selectedCategory === category;
         return (
           <button

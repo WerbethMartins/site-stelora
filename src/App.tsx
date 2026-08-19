@@ -3,10 +3,16 @@ import "./App.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Navigate, Route, Routes } from "react-router-dom";
 
+// Componentes
 import ProductForm from "./components/ProductForm";
+
+// Context
+import { NotificationProvider } from "./context/NotificationContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
 import { MessageProvider } from "./hooks/useMessage";
+
+// Pages
 import Catalog from "./pages/Catalog";
 import Checkout from "./pages/Checkout";
 import ForgetPasswordPage from "./pages/ForgetPassword_page";
@@ -54,6 +60,7 @@ function App() {
     return (
         <div style={{ minHeight: "100dvh", display: "flex", flexDirection: "column" }}>
             <main style={{ flex: 1, width: "100%" }}>
+                <NotificationProvider >
                 <GoogleOAuthProvider clientId={googleClientId}>
                     <MessageProvider>
                         <AuthProvider>
@@ -63,6 +70,7 @@ function App() {
                         </AuthProvider>
                     </MessageProvider>
                 </GoogleOAuthProvider>
+                </NotificationProvider>
             </main>
         </div>
     );

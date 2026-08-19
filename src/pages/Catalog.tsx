@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // Components
 import Categories from "../components/Categories";
 import { useAuth } from "../context/AuthContext";
 import { useMessage } from "../hooks/useMessage";
+import { Loading } from "../components/Loading";
+import { useNotifications } from "../context/NotificationContext";
+import { NotificationPopover } from "../components/NotificationPopover";
 
 // Services & types
 import { getProducts, type Product, deleteProduct, toggleProductExclusive } from "../service/ProductService";
@@ -16,18 +19,25 @@ import filter from "../assets/img/filter.png";
 import heartOutline from "../assets/img/White heart.png";
 import arrow from "../assets/img/arrow.png";
 import favorite from "../assets/img/estrela.png";
-import start from "../assets/img/star.png";
 import menuHamburguer from "../assets/img/menu-hamburguer(white).png";
 import delet from "../assets/img/close.png"
 import { compressImage } from "../utils/CompressImage";
 
-const categories = ["All", "Best Sellers", "New Arrivals"];
+const formatCurrency = (value: number) => {
+  return value.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+};
 
 function Catalog() {
-    const [menuIcons, setMenuIcons] = useState(false);
+    const navigate = useNavigate();
+    const { unreadCount } = useNotifications();
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+    const [openMenuProductId, setOpenMenuProductId] = useState<string | null>(null);
     const [products, setProducts] = useState<Product[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+    const [loading, setLoading] = useState(true);
+    const [selectedCategory, setSelectedCategory] = useState("All");
     const [searchQuery, setsearchQuery] = useState("");
 
     const [formProductExclusive, setFormProductExclusive] = useState(false);
@@ -43,25 +53,43 @@ function Catalog() {
         setFormProductExclusive((prev) => !prev);
     }
 
-    const toggleMenuIcons = () => {
-        setMenuIcons((prev) => !prev);
+    const toggleMenuIcons = (productId: string) => {
+        setOpenMenuProductId((prev) => (prev === productId ? null : productId));
     };
 
     // Carrega os produtos do Firestore ao montar o componente
     useEffect(() => {
         async function fetchProducts() {
             try{
+                setLoading(true);
                 const data = await getProducts();
+
+                await new Promise((resolve) => setTimeout(resolve, 2000));
+
                 setProducts(data);
             }catch(error){
                 console.error("Erro ao carregar catálogo:", error);
             }finally {
-                setIsLoading(false);
+                setLoading(false);
             }
         }
 
         fetchProducts();
     }, []);
+
+    if(loading){
+        return <Loading message="Buscando produtos no catálogo..." />
+    }
+
+    if(!products) {
+        return(
+            <div className="not-found-container">
+                <h2>Produto não encontrado</h2>
+                <p>O produto que você procura não existe ou foi removido.</p>
+                <Link to="/catalog">Voltar ao catálogo</Link>
+            </div>
+        );
+    }
 
     const handleStarClick = (product: Product) => {
         if (!product.id) return;
@@ -99,13 +127,18 @@ function Catalog() {
         try {
             await toggleProductExclusive(product.id!, true, imgExclusive);
 
-            setProducts((prev) => 
-                prev.map((p) => 
-                    p.id === product.id
-                        ? { ...p, exclusive: true, enphasis: true, imgExclusive }
-                        : p
-                )
+            setProducts((prev) =>
+            prev.map((p) => {
+                    if (p.id === product.id) {
+                        return { ...p, exclusive: true, enphasis: true, imgExclusive };
+                    }
+                    const { imgExclusive: _imgExclusive, ...rest } = p;
+                    return { ...rest, exclusive: false, enphasis: false } as Product;
+                })
             );
+
+            showMessage("Novo produto definido como o único destaque da Home!");
+
         }catch (error) {
             showMessage("Erro ao atualizar o destaque do produto.");
         }finally {
@@ -129,6 +162,7 @@ function Catalog() {
 
             await applyExclusiveUpdate(selectedProductForExclusive, featuredImageBase64);
             showMessage("Produto atualizado como destaque com sucesso!");
+            navigate("/home");
         }catch (error) {
             showMessage("Erro ao processar a imagem de destaque.");
         }finally {
@@ -137,9 +171,10 @@ function Catalog() {
         }
     }
 
-    const handleSelectCategory = (category: string) => {
-        setSelectedCategory(category);
-    };
+    const availableCategories = [
+        "All", 
+        ...Array.from(new Set(products.map((product) => product.category).filter(Boolean)))
+    ];
 
     // Função para deletar o produto do banco e da tela
     const handleDelete = async (productId: string) => {
@@ -168,7 +203,7 @@ function Catalog() {
 
     // Cálculo do preço final com desconto
     const finalPrice = (price: number, discount: number) => {
-        return (price * (1 - discount / 100)).toFixed(2);
+        return price * (1 - discount / 100);
     };
 
 
@@ -184,9 +219,30 @@ function Catalog() {
                     </Link>
                     <div className="catalog__header-title-group">
                         <h1 className="catalog__title">Catalog</h1>
-                        <button type="button" className="catalog__icon-btn">
-                            <img className="catalog__icon" src={bell} alt="Notificações" />
-                        </button>
+                        
+                        {/* Botão de Notificação com Badge */}
+                        <div style={{ position: "relative" }}>
+                            <button
+                                type="button"
+                                className="catalog__icon-btn"
+                                onClick={() => setIsPopoverOpen((prev) => !prev)}
+                                aria-label="Abrir Notificações"
+                            >
+                                <img className="catalog__icon" src={bell} alt="Notificações" />
+
+                                {/* Badge de notificações não lidas */}
+                                {unreadCount > 0 && (
+                                <span className="catalog__notification-badge">
+                                    {unreadCount > 9 ? "9+" : unreadCount}
+                                </span>
+                                )}
+                            </button>
+
+                            {/* Painel Dropdown */}
+                            {isPopoverOpen && (
+                                <NotificationPopover onClose={() => setIsPopoverOpen(false)} />
+                            )}
+                        </div>
                     </div>
                 </div>
 
@@ -207,12 +263,12 @@ function Catalog() {
                 </div>
 
                 <Categories
-                    categories={categories}
+                    categories={availableCategories}
                     selectedCategory={selectedCategory}
-                    onSelectCategory={handleSelectCategory}
+                    onSelectCategory={setSelectedCategory}
                 />
 
-                {isLoading ? (
+                {loading ? (
                     <div style={{ textAlign: "center", padding: "2rem"}}>Carregando produto</div>
                 ) : filteredProducts.length === 0 ? (
                     <div style={{ textAlign: "center", padding: "2rem"}}>Nenhum produto encontrado.</div>
@@ -226,13 +282,13 @@ function Catalog() {
                                         {isAdmin ? (
                                             <>
                                                 {/* Ícone de menu para admin */}
-                                                <button type="button" className="product-card__icon" onClick={toggleMenuIcons}>
+                                                <button type="button" className="product-card__icon" onClick={() => toggleMenuIcons(product.id!)}>
                                                     <img
                                                         style={{ width: "20px", height: "20px" }} 
                                                         src={menuHamburguer} alt="Menu" 
                                                     />
                                                 </button>
-                                                {menuIcons && (
+                                                {openMenuProductId === product.id  && (
                                                     <div className="admin-icons__icons">
                                                         <button type="button" className="favorite_icon product-card__icon" onClick={toggleFormProductExclusive}>
                                                             <img
@@ -275,11 +331,11 @@ function Catalog() {
                                         </div>
                                     )}
 
-                                    {product.discount && (
+                                    {product.discount ? (
                                         <span className="product-card__discount-badge">
                                             -{product.discount}%
                                         </span>
-                                    )}
+                                    ) : ""}
                                 </div>
 
                                 <Link to={`/checkout/${product.id}`} style={{ textDecoration: 'none' }} key={product.id}>
@@ -296,12 +352,12 @@ function Catalog() {
                                     <div className="product-card__info">
                                         <h4 className="product-card__name">{product.name}</h4>
                                         <div className="prices_section">
-                                            <p className="product-card__price" style={{ fontSize: "1.1rem" }}>${product.price}</p>
-                                            {product.discount && (
+                                            <p className="product-card__price" style={{ fontSize: "1.1rem" }}>R${product.price}</p>
+                                            {product.discount ? (
                                                 <p className="product-card__final-price" style={{ fontSize: "1rem" }}>
-                                                    ${finalPrice(product.price, product.discount)}
+                                                    {formatCurrency(finalPrice(product.price, product.discount))}
                                                 </p>
-                                            )}
+                                            ): ""}
                                         </div>
                                     </div>
                                 </div>

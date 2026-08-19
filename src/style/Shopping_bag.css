@@ -71,36 +71,54 @@
 
                 & .item__price-quantity {
                     display: flex;
-                    flex-direction: row;
+                    flex-direction: column;
                     justify-content: space-between;
-                    align-items: center;
+                    align-items: flex-start;
                     gap: 5px;
                     width: 100%;
 
                     & .price-quantity__price-discount {
                         display: flex;
-                        flex-direction: row;
-                        align-items: center;
-                        gap: 10px;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        gap: 5px;
                         width: 100%;
+
+                        & .discount {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+                            align-items: center;
+                            gap: 10px;
+                        }
                     }
 
-                    & .item__choose-QTD {
+                    & .product-information__footer {
                         display: flex;
                         flex-direction: row;
                         justify-content: space-between;
                         align-items: center;
-                        gap: 5px;
 
-                        & .choose-QTD__btn {
-                            border: none;
-                            border-radius: 50%;
-                            background-color: none;
-                            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.158);
+                        width: 100%;
 
-                            img {
-                                width: 20px;
-                                height: 20px;
+                        & .item__choose-QTD {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+                            align-items: center;
+                            gap: 5px;
+
+                            & .choose-QTD__btn {
+                                border: none;
+                                border-radius: 50%;
+                                background-color: none;
+                                box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.158);
+
+                                img {
+                                    width: 20px;
+                                    height: 20px;
+                                }
                             }
                         }
                     }

@@ -11,6 +11,7 @@ import highlightBackground from "../assets/img/Highlight_background.jpg";
 import starLight from "../assets/img/star.png";
 import watch from "../assets/img/stopwatch.png";
 import { useEffect, useState } from "react";
+import { Loading } from "../components/Loading";
 
 
 function Home() {
@@ -22,7 +23,11 @@ function Home() {
     useEffect(() => {
         async function fetchHomeProducts(){
             try {
+                setLoading(true);
                 const data = await getProducts();
+
+                await new Promise((resolve) => setTimeout(resolve, 2000));
+
                 setProducts(data);
             }catch(error){
                 console.error("Erro ao carregar produto em destaque:", error);
@@ -33,6 +38,10 @@ function Home() {
 
         fetchHomeProducts();
     }, []);
+
+    if(loading) {
+        return <Loading message="Carregando Página inicial..." /> 
+    }
 
     // Encontra o produto marcado como exclusivo/destaque
     const exclusiveProduct = products.find((product) => product.exclusive)

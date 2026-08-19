@@ -10,7 +10,16 @@ import less from "../assets/img/less-orange-icon.png";
 // Components 
 import { CartIconWithBadge } from "../components/CartIconWithBadge";
 
+// Context
 import { useCart } from "../context/CartContext";
+
+// Helper para a formatação de moeda BRL
+const formatCurrency = (value: number) => {
+  return value.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+};
 
 function Shopping_bag() {
     const { cart, updateQuantity } = useCart();
@@ -106,55 +115,59 @@ function Shopping_bag() {
 
                                     <div className="item__price-quantity">
                                         <div className="price-quantity__price-discount">
-                                            <p style={{ fontSize: "1.3rem", fontWeight: "bold" }}>
-                                            R$ {itemTotalPrice.toFixed(2)}
-                                            </p>
+                                            <div className="discount">
+                                                {product.discount ? (
+                                                    <>
+                                                        <p
+                                                        style={{
+                                                            color: "white",
+                                                            fontSize: "11px",
+                                                            padding: "3px 6px",
+                                                            backgroundColor: "#eb9a21",
+                                                            borderRadius: "20px",
+                                                        }}
+                                                        >
+                                                        -{product.discount}%
+                                                        </p>
 
-                                            {product.discount && (
-                                            <>
-                                                <p
-                                                style={{
-                                                    color: "white",
-                                                    fontSize: "11px",
-                                                    padding: "3px 6px",
-                                                    backgroundColor: "#eb9a21",
-                                                    borderRadius: "20px",
-                                                }}
-                                                >
-                                                -{product.discount}%
-                                                </p>
-
-                                                <p
-                                                style={{
-                                                    color: "grey",
-                                                    fontSize: "15px",
-                                                    textAlign: "center",
-                                                    backgroundColor: "transparent",
-                                                    textDecoration: "line-through",
-                                                }}
-                                                >
-                                                R$ {product.price.toFixed(2)}
-                                                </p>
-                                            </>
-                                            )}
+                                                        <p
+                                                        style={{
+                                                            color: "grey",
+                                                            fontSize: "15px",
+                                                            textAlign: "center",
+                                                            backgroundColor: "transparent",
+                                                            textDecoration: "line-through",
+                                                        }}
+                                                        >
+                                                        {formatCurrency(product.price)}
+                                                        </p>
+                                                    </>
+                                                ): null}
+                                            </div>
                                         </div>
 
-                                        <div className="item__choose-QTD">
-                                            <button
-                                                type="button"
-                                                className="choose-QTD__btn"
-                                                onClick={() => updateQuantity(product.id, quantity - 1)}
-                                            >
-                                                <img src={less} alt="Diminuir quantidade" />
-                                            </button>
-                                                <p style={{ color: "#000", fontSize: "20px" }}>{quantity}</p>
-                                            <button
-                                                type="button"
-                                                className="choose-QTD__btn"
-                                                onClick={() => updateQuantity(product.id, quantity + 1)}
-                                            >
-                                                <img src={more} alt="Aumentar quantidade" />
-                                            </button>
+                                        <div className="product-information__footer">
+                                            <p style={{ fontSize: "1.3rem", fontWeight: "bold" }}>
+                                                {formatCurrency(itemTotalPrice)}
+                                            </p>
+                                            
+                                            <div className="item__choose-QTD">
+                                                <button
+                                                    type="button"
+                                                    className="choose-QTD__btn"
+                                                    onClick={() => updateQuantity(product.id, quantity - 1)}
+                                                >
+                                                    <img src={less} alt="Diminuir quantidade" />
+                                                </button>
+                                                    <p style={{ color: "#000", fontSize: "20px" }}>{quantity}</p>
+                                                <button
+                                                    type="button"
+                                                    className="choose-QTD__btn"
+                                                    onClick={() => updateQuantity(product.id, quantity + 1)}
+                                                >
+                                                    <img src={more} alt="Aumentar quantidade" />
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

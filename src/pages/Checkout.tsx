@@ -15,6 +15,7 @@ import less from "../assets/img/minus.png";
 import { type Product, getProducts } from "../service/ProductService";
 import { useCart } from "../context/CartContext";
 import { useMessage } from "../hooks/useMessage";
+import { Loading } from "../components/Loading";
 
 function Checkout() {
     // Pega o id vindo da URL (ex: /checkout/1)
@@ -22,6 +23,7 @@ function Checkout() {
     const navigate = useNavigate();
     const { addToCart } = useCart();
     const { showSuccess } = useMessage();
+    const [loading, setLoading] = useState<boolean>(true);
 
     // Busca o produto cujo id coincide com o id da URL
     // Converter para String/Number conforme o tipo do mock
@@ -30,26 +32,34 @@ function Checkout() {
 
     useEffect(() => {
         const fetchProduct = async () => {
+            if (!id) return;
             try {
+                setLoading(true);
                 const products = await getProducts();
                 const foundProduct = products.find((p) => p.id?.toString() === id);
                 setProduct(foundProduct || null);
             }catch(error) {
                 console.error("Erro ao buscar produto:", error)
+            }finally{
+                setLoading(false);
             }
         }
 
         fetchProduct();
     }, [id]);
 
+    if (loading) {
+        return <Loading message="Buscando informações do produto..." />;
+    }
+
     if (!product) {
         return (
-        <div>
+        <div className="not-found-container">
             <h2>Produto não encontrado</h2>
+            <p>O produto que você procura não existe ou foi removido.</p>
             <Link to="/catalog">Voltar ao catálogo</Link>
         </div>
         );
-
     }
 
     const handleIncrease = () => setQuantity((prev) => prev + 1);
@@ -74,7 +84,14 @@ function Checkout() {
 
     return (
         <>
-            <section className="checkout" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(${product.image})`}}>
+            <section className="checkout" style={{
+                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(${product.image})`, 
+                    width: "100%",
+                    height: "100vh",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                }}>
+                
                 <div className="checkout__header">
                     <Link to="/catalog">
                         <button type="button" className="checkout__back-btn">
@@ -100,9 +117,9 @@ function Checkout() {
                         {/* Preço de desconto*/}
                         <div className="price">
                             <p style={{color: "black", fontSize: "24px", fontWeight: "bold"}}>
-                                {totalPrice}
+                                R${totalPrice}
                             </p>
-                            {product.discount && (
+                            {product.discount ? (
                             <>
                                 <p 
                                     style={{
@@ -115,7 +132,6 @@ function Checkout() {
                                 >
                                     -{product.discount}%
                                 </p>
-
                                 <p
                                     style={{
                                         color: "grey",
@@ -123,10 +139,10 @@ function Checkout() {
                                         textDecoration: "line-through",
                                     }}
                                     >
-                                    ${product.price.toFixed(2)}
+                                    R${product.price.toFixed(2)}
                                 </p>
                             </>
-                            )}
+                            ) : ""}
                         </div>
 
                         <div className="info__choose-QTD">

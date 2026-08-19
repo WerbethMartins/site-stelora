@@ -8,4 +8,6 @@
 @import "./style/ProductForm.css";
 @import "./style/Login_page.css";
 @import "./style/Register_page.css";
-@import "./style/Forget-password.css"
+@import "./style/Forget-password.css";
+@import "./style/Loading.css";
+@import "./style/NotificationPopover.css";

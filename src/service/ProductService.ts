@@ -1,5 +1,6 @@
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, deleteDoc, doc, updateDoc, writeBatch } from "firebase/firestore";
 import { app } from "../configuracao/FirebaseConfig";
+import { where } from "firebase/firestore/lite";
 
 // Initialize Firestore
 const db = getFirestore(app);
@@ -74,12 +75,41 @@ export async function toggleProductExclusive(
     try {
         const productRef = doc(db, "products", productId);
 
-        await updateDoc(productRef, {
-            exclusive: newExclusiveStatus,
-            enphasis: newExclusiveStatus,
-            // Se estiver ativando e houver imagem nova, salva ela. Se desativar, limpa ou mantém.
-            imgExclusive: newExclusiveStatus ? (imgExclusive || null) : null
-        });
+        if (newExclusiveStatus) {
+            const batch = writeBatch(db);
+
+            // Busca todos os produtos que atualmente estão como exclusivos
+            const exclusiveQuery = query(collection(db, "products"), where("exclusive", "==", true));
+            const querySnapshot = await getDocs(exclusiveQuery);
+
+            // Desmarca todos os produtos antigos encontrados
+            querySnapshot.forEach((docSnap) => {
+                if (docSnap.id !== productId) {
+                    batch.update(docSnap.ref, {
+                        exclusive: false,
+                        enphasis: false,
+                        imgExclusive: null
+                    });
+                }
+            });
+
+            // Define o produto atual como o novo e único exclusivo
+            batch.update(productRef, {
+                exclusive: true,
+                enphasis: true,
+                imgExclusive: imgExclusive || null
+            });
+
+            // Executa todas as alterações de uma só vez
+            await batch.commit();
+        } else {
+            // Se estiver apenas desativando o produto atual
+            await updateDoc(productRef, {
+                exclusive: false,
+                enphasis: false,
+                imgExclusive: null
+            });
+        }
     } catch (error) {
         console.error("Erro ao alterar destaque do produto:", error);
         throw error;
