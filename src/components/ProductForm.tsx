@@ -8,6 +8,7 @@ import arrow from "../assets/img/arrow.png";
 // Hooks
 import { useMessage } from "../hooks/useMessage";
 import { addProduct } from "../service/ProductService";
+import { useNotifications } from "../context/NotificationContext";
 
 // Utils
 import { compressImage } from "../utils/CompressImage";
@@ -21,6 +22,7 @@ function ProductForm() {
     const [loading, setLoading] = useState(false);
 
     const { showMessage } = useMessage();
+    const { addNotification } = useNotifications();
     const navigate = useNavigate();
 
     // Função para criar URL da imagem ao criar um novo Produto
@@ -44,7 +46,7 @@ function ProductForm() {
         setIsSubmitting(true);
 
         if(!imageUrl){
-            showMessage("Pro favor, selecione uma imagem para o produto.");
+            showMessage("Por favor, selecione uma imagem para o produto.");
             return;
         }
         
@@ -70,6 +72,12 @@ function ProductForm() {
             await addProduct(newProduct);
             showMessage("produto cadastrado com sucesso!");
 
+            // Dispara a notificação automática
+            addNotification(
+                "Novo Produto Cadastrado",
+                `O produto "${newProduct.name}" foi adicionado com sucesso!`,
+                new Date().toDateString()
+            );
             await new Promise((resolve) => setTimeout(resolve, 2000));
 
             navigate("/catalog")

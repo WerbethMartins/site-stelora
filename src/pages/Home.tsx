@@ -93,7 +93,7 @@ function Home() {
                                 className="hero__sign-btn hero__btn"
                                 style={{ backgroundColor: "#e03b7f" }}
                             >
-                                Gerenciar Destaques
+                                <p>Gerenciar Destaques</p>
                             </button>
                         </Link>
                     )}

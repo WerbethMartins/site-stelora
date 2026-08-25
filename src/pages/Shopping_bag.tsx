@@ -45,7 +45,7 @@ function Shopping_bag() {
                         <img src={arrow} alt="Voltar" />
                         </button>
                     </Link>
-                    <h4 className="header__title">Shopping Bag</h4>
+                    <h2 className="header__title">Shopping Bag</h2>
                     <button type="button" className="shopping-bag__icon-btn" aria-label="Sacola vazia">
                         <img className="heart_icon" src={heartBag} alt="Sacola de compra" />
                     </button>
@@ -159,7 +159,7 @@ function Shopping_bag() {
                                                 >
                                                     <img src={less} alt="Diminuir quantidade" />
                                                 </button>
-                                                    <p style={{ color: "#000", fontSize: "20px" }}>{quantity}</p>
+                                                    <p style={{ color: "#fff", fontSize: "20px" }}>{quantity}</p>
                                                 <button
                                                     type="button"
                                                     className="choose-QTD__btn"

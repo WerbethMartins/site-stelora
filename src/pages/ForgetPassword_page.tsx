@@ -56,9 +56,6 @@ function forgetPassword_page() {
                     </Link>
                     <div className="form__header-title-group">
                         <h2 className="form__title">Esqueceu a senha</h2>
-                        <button type="button" className="form__icon-btn">
-                            <img className="form__icon" src={bell} alt="Notificações" />
-                        </button>
                     </div>
                 </div>
 

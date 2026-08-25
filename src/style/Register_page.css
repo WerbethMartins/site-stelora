@@ -25,11 +25,34 @@
             box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.250);
         }
 
-        & .form__header-title-group {
+        & .form-header__title-group {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
             width: 70%;
+        }
+
+        & .catalog__icon-btn {
+            border: none;
+            border-radius: 50%;
+            background-color: #fff;
+            width: 40px;
+            height: 40px;
+            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.250);
+
+            & .catalog__icon {
+                border: none;
+                background-color: none;
+            }
+        }
+
+        & .form-header__icon {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            border: none;
 
             & .form__icon-btn {
                 border: none;

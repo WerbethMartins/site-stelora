@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithGoogleAccessToken, signUp } from "../service/AuthService";
 
+// Components
+import { NotificationPopover } from "../components/NotificationPopover";
+
+//Context
+import { useNotifications } from "../context/NotificationContext";
 
 // Autenticação com o google
 import CustomGoogleButton from "../components/CustomGoogleButton";  
@@ -17,8 +22,27 @@ import { useMessage } from "../hooks/useMessage";
 
 function Register_page(){
     const navegate = useNavigate();
+    const { unreadCount } = useNotifications();
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+    const popoverRef = useRef<HTMLDivElement>(null);
     const { showMessage } = useMessage();
     const [isLoading] = useState(false);
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent){
+            if(popoverRef.current && !popoverRef.current.contains(event.target as Node)){
+                setIsPopoverOpen(false);
+            }
+        }
+
+        if (isPopoverOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isPopoverOpen]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -54,11 +78,31 @@ function Register_page(){
                             <img src={arrow} alt="Voltar" />
                         </button>
                     </Link>
-                    <div className="form__header-title-group">
+                    <div className="form-header__title-group">
                         <h1 className="form__title">Registro</h1>
-                        <button type="button" className="form__icon-btn">
-                            <img className="form__icon" src={bell} alt="Notificações" />
+                    </div>
+                    {/* Botão de Notificação com Badge */}
+                    <div style={{ position: "relative" }}>
+                        <button
+                            type="button"
+                            className="catalog__icon-btn"
+                            onClick={() => setIsPopoverOpen((prev) => !prev)}
+                            aria-label="Abrir Notificações"
+                        >
+                            <img className="catalog__icon" src={bell} alt="Notificações" />
+
+                            {/* Badge de notificações não lidas */}
+                            {unreadCount > 0 && (
+                            <span className="catalog__notification-badge">
+                                {unreadCount > 9 ? "9+" : unreadCount}
+                            </span>
+                            )}
                         </button>
+
+                        {/* Painel Dropdown */}
+                        {isPopoverOpen && (
+                            <NotificationPopover onClose={() => setIsPopoverOpen(false)} />
+                        )}
                     </div>
                 </div>
                 <form onSubmit={handleSubmit} className="register-form">

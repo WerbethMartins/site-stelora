@@ -3,11 +3,13 @@
     flex-direction: column;
     justify-content: flex-start;
     gap: 10px;
+    color: #ffffff;
+    background-color: #0000;
     padding: 0 10px;
     width: 100%;
     height: auto;
 
-    & .catalog__exlusive-form {
+    & .catalog__exclusive-form {
         position: absolute;
         display: flex;
         flex-direction: column;
@@ -24,7 +26,7 @@
         height: 200px;
         text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.575);
 
-        & .exlusive-form__title {
+        & .exclusive-form__title {
             color: #eb2821;
         }
 
@@ -123,7 +125,9 @@
             & .catalog__search-input {
                 color: #a1a1a1;
                 border: none;
+                border-radius: 15px;
                 background-color: #f9f9f9;
+                padding: 5px;
                 width: 100%;
                 height: 40px;
             }
@@ -206,9 +210,9 @@
                 & .product-card__favorite-icon {
                     position: relative;
                     display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin: 0 5px;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    padding: 5px;
 
                     & .product-card__icon {
                         display: flex;
@@ -222,21 +226,85 @@
                         height: 30px;
                         box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.397);
                     }
+
+                    & .admin-icons__icons {
+                        z-index: 10;
+                        position: absolute;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                        padding: 10px; 
+                        top: 90%;
+                        right: 0;
+                        left: -10%;
+
+                        & .delete_icon {
+                            background-color: #eb2821;
+                        }
+                    }
                 }
 
-                & .admin-icons__icons {
-                    z-index: 10;
-                    position: absolute;
+                & .confirm-modal-overlay {
+                    z-index: 1000;
+                    position: fixed;
                     display: flex;
-                    flex-direction: column;
-                    gap: 10px;
-                    padding: 10px; 
-                    top: 100%;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: rgba(0, 0, 0, 0.5);;
+                    backdrop-filter: blur(4px);
+                    padding: 20px;
+                    top: 0;
+                    left: 0;
                     right: 0;
-                    left: -30%;
+                    bottom: 0;
 
-                    & .delete_icon {
-                        background-color: #eb2821;
+                    & .confirm-modal {
+                        border-radius: 16px;
+                        text-align: center;
+                        background-color: #ffffff;
+                        padding: 24px 20px;
+                        width: 100%;
+                        max-width: 320px;
+                        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                        animation: modalAppear 0.2s ease-out;
+
+                        & .confirm-modal__title {
+                            font-size: 25px;
+                            font-weight: 700;
+                            color: #1a1a1a;
+                            margin-bottom: 8px;
+                        }
+
+                        & .confirm-modal__message {
+                            font-size: 16px;
+                            color: #666666;
+                            margin-bottom: 24px;
+                        }
+
+                        & .confirm-modal__actions {
+                            display: flex;
+                            gap: 12px;
+
+                             & .confirm-modal__btn {
+                                cursor: pointer;
+                                flex: 1;
+                                font-size: 14px;
+                                font-weight: 600;
+                                border: none;
+                                border-radius: 10px;
+                                padding: 12px 0;
+                                transition: background-color 0.2s ease;
+
+                                & .confirm-modal__btn--cancel {
+                                    background-color: #f3f3f3;
+                                    color: #333333;
+
+                                    &:active {
+                                        background-color: #e5e5e5;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -299,4 +367,15 @@
             }
         }
     }
+}
+
+@keyframes modalAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

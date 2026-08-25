@@ -1,4 +1,4 @@
-import icon from "../assets/img/Stelora_icon.png";
+import icon from "../assets/img/logo_stelora-2.png";
 
 interface LoadingProps {
   message?: string;

@@ -11,6 +11,7 @@ import { NotificationProvider } from "./context/NotificationContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
 import { MessageProvider } from "./hooks/useMessage";
+import { FavoritesProvider } from "./context/FavoriteContext";
 
 // Pages
 import Catalog from "./pages/Catalog";
@@ -61,15 +62,17 @@ function App() {
         <div style={{ minHeight: "100dvh", display: "flex", flexDirection: "column" }}>
             <main style={{ flex: 1, width: "100%" }}>
                 <NotificationProvider >
-                <GoogleOAuthProvider clientId={googleClientId}>
-                    <MessageProvider>
-                        <AuthProvider>
-                            <CartProvider>
-                                <AppRoutes />
-                            </CartProvider>
-                        </AuthProvider>
-                    </MessageProvider>
-                </GoogleOAuthProvider>
+                    <GoogleOAuthProvider clientId={googleClientId}>
+                        <MessageProvider>
+                            <AuthProvider>
+                                <CartProvider>
+                                    <FavoritesProvider>
+                                        <AppRoutes />
+                                    </FavoritesProvider>
+                                </CartProvider>
+                            </AuthProvider>
+                        </MessageProvider>
+                    </GoogleOAuthProvider>
                 </NotificationProvider>
             </main>
         </div>
