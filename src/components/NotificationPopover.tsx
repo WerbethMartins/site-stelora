@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useNotifications } from "../context/NotificationContext";
 
 // Images
-import MarkAllAsRead from "../assets/img/markAllAsRead.png";
 import { useState } from "react";
 
 interface Props {

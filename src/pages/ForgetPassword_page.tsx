@@ -10,7 +10,6 @@ import { useMessage } from "../hooks/useMessage";
 import CustomGoogleButton from "../components/CustomGoogleButton";
 
 // Images
-import bell from "../assets/img/bell.png";
 import arrow from "../assets/img/arrow.png";
 import facebook from "../assets/img/facebook.png";
 import instagram from "../assets/img/instagram_Color.png";

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 // Context
@@ -48,6 +48,12 @@ export function ProductCard({ product }: ProductCardProps) {
     const [productToDelete, setProductToDelete] = useState<string | null>(null);
 
     const { isAdmin } = useAuth();
+
+    if(!products) {
+        return(
+            <div><h1>Produtos não encontrados...</h1></div>
+        );
+    }
 
     const toggleFormProductExclusive = () => {
             setFormProductExclusive((prev) => !prev);
