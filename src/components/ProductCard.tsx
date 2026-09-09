@@ -214,6 +214,7 @@ export function ProductCard({ product }: ProductCardProps) {
                             onClick={() => {
                                 if (product.id == null) return;
                                 toggleFavorite({ ...product, id: product.id });
+                                showMessage(favorited ? "Produto removido dos favoritos!" : "Produto adicionado aos favoritos!");
                             }} 
                             aria-label={favorited ? "Remover dos favoritos" : "Adicionar aos favoritos"} >
                                 <img className="heart_icon product-card__icon" src={favorited ? heartFilled : heartOutline} alt="Favorite" />

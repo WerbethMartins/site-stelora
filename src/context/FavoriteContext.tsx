@@ -11,9 +11,15 @@ export interface Product {
     size?: string;
 }
 
+export interface FavoriteItem {
+    product: Product;
+}
+
 interface FavoritesContextType {
+    favItems: FavoriteItem[];
     favorites: Product[];
     favoritesCount: number;
+    removeFromFavorites: (productId: string | number) => void;
     toggleFavorite: (product: Product) => void;
     isFavorite: (productId: string | number) => boolean;
 }
@@ -34,13 +40,22 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({ children 
 
     // Persiste alterações no localstorage
     useEffect(() => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
+        }catch (error) {
+            console.error("Erro ao salvar o eu favorito no localstorage:", error);
+        }
     }, [favorites]);
 
     const isFavorite = (productId: string | number) => {
         return favorites.some((item) => String(item.id) === String(productId));
     };
 
+    const removeFromFavorites = (productId: string | number) => {
+        setFavorites((prev) => prev.filter((item) => String(item.id) !== String(productId)));
+    };
+
+    // Adiciona ou remove um produto dos favoritos 
     const toggleFavorite = (product: Product) => {
         setFavorites((prev) => {
             const exists = prev.some((item) => String(item.id) === String(product.id));
@@ -54,10 +69,12 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({ children 
     return (
         <FavoritesContext.Provider
             value={{
+                favItems: favorites.map((product) => ({ product })),
                 favorites,
                 favoritesCount: favorites.length,
                 toggleFavorite,
                 isFavorite,
+                removeFromFavorites,
             }}
         >
             {children}

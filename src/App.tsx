@@ -21,6 +21,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login_page";
 import RegisterPage from "./pages/Register_page";
 import ShoppingBag from "./pages/Shopping_bag";
+import FavoritePage from "./pages/FavoritePage";
 
 const googleClientId = "119000959574-ecjit86tbv5vb7ft54msq91au7p4rs6v.apps.googleusercontent.com";
 
@@ -48,6 +49,7 @@ function AppRoutes() {
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/checkout/:id" element={<Checkout />} />
             <Route path="/cart" element={<ShoppingBag />} />
+            <Route path="/favorites" element={<FavoritePage />} />
             <Route
                 path="/admin/product-form"
                 element={isAdmin ? <ProductForm /> : <Navigate to="/" replace />}

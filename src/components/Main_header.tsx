@@ -98,7 +98,7 @@ function Header() {
                             </Link>
                         </li>
                         <li className="menu-links__item">
-                            <Link to="/modelos" aria-label="Ir para os modelos 3D">
+                            <Link to="/catalog?category=3d" aria-label="Ir para os modelos 3D">
                                 3D Modelos
                             </Link>
                         </li>

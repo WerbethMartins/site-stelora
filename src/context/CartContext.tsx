@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, type ReactNode, useEffect } from "react";
 import type { Product } from "../data/mockProducts";
-
+1
 export interface CartItem {
     product: Product;
     quantity: number;

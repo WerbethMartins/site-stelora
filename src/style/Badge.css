@@ -1,11 +1,11 @@
-.cart-icon-wrapper {
+.icon-wrapper {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
-.cart-icon-badge {
+.icon-badge {
   position: absolute;
   display: flex;
   align-items: center;

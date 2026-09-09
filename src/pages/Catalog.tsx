@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 // Components
 import Categories from "../components/Categories";
 import { Loading } from "../components/Loading";
 import { NotificationPopover } from "../components/NotificationPopover";
 import { ProductCard } from "../components/ProductCard";
+import { FavoriteIconWithBadge } from "../components/FavoriteIconWithBadge";
 
 //Context
 import { useNotifications } from "../context/NotificationContext";
@@ -14,11 +15,16 @@ import { useNotifications } from "../context/NotificationContext";
 import { getProducts, type Product } from "../service/ProductService";
 
 // Images
+import shopping_bag from "../assets/img/shopping-bag (white heart).png";
 import bell from "../assets/img/bell.png";
 import searchIcon from "../assets/img/search.png";
 import arrow from "../assets/img/arrow.png";
 
 function Catalog() {
+    // Parâmetros de busca da URL 
+    const [searchParams] = useSearchParams();
+    const categoryFilter = searchParams.get("category"); // Retorna '3d' ou null
+
     const { unreadCount } = useNotifications();
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const popoverRef = useRef<HTMLDivElement>(null);
@@ -27,7 +33,7 @@ function Catalog() {
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [searchQuery, setsearchQuery] = useState("");
 
-    // Fecha o popover se o usuário clicasr fora
+    // Fecha o popover se o usuário clicar fora
     useEffect(() => {
         function handleClickOutside(event: MouseEvent){
             if(popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
@@ -83,16 +89,16 @@ function Catalog() {
         ...Array.from(new Set(products.map((product) => product.category).filter(Boolean)))
     ];
 
-    // Função para deletar o produto do banco e da tela
-
-    // Lógica de filtragem por Categoria e Busca por Texto
     const filteredProducts = products.filter((product) => {
-        const matchesCategory = selectedCategory === "All" || product.category === selectedCategory;
-        const matchesSearch = product.name
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase());
+        const matchesUrlCategory = !categoryFilter || product.category === categoryFilter;
 
-        return matchesCategory && matchesSearch;
+        const matchesSelectedCategory = selectedCategory === "All" || product.category === selectedCategory;
+
+        const matchesSearch = product.name
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
+
+        return matchesUrlCategory && matchesSelectedCategory && matchesSearch;
     });
 
     return (
@@ -107,6 +113,23 @@ function Catalog() {
                     </Link>
                     <div className="catalog__header-title-group">
                         <h1 className="catalog__title">Catalogo</h1>
+
+                        <Link to="/favorites" aria-label="Abrir página de favoritos">
+                            <button
+                                type="button" 
+                                className="catalog__icon-btn"
+                                aria-label="Bag de favoritos"
+                                style={{backgroundColor: "#eb9a21"}}
+                            > 
+                                <FavoriteIconWithBadge />  
+                                <img 
+                                    className="catalog__icon" 
+                                    src={shopping_bag} 
+                                    alt="Image de sacola de favoritos" 
+                                    style={{width: "30px", height: "30px"}}
+                                />
+                            </button>
+                        </Link>
                         
                         {/* Botão de Notificação com Badge */}
                         <div style={{ position: "relative" }}>

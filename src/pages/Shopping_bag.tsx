@@ -42,7 +42,7 @@ function Shopping_bag() {
                 <div className="shopping-bag__header">
                     <Link to="/catalog">
                         <button type="button" className="shopping-bag__back-btn">
-                        <img src={arrow} alt="Voltar" />
+                            <img src={arrow} alt="Voltar" />
                         </button>
                     </Link>
                     <h2 className="header__title">Shopping Bag</h2>
@@ -119,13 +119,13 @@ function Shopping_bag() {
                                                 {product.discount ? (
                                                     <>
                                                         <p
-                                                        style={{
-                                                            color: "white",
-                                                            fontSize: "11px",
-                                                            padding: "3px 6px",
-                                                            backgroundColor: "#eb9a21",
-                                                            borderRadius: "20px",
-                                                        }}
+                                                            style={{
+                                                                color: "white",
+                                                                fontSize: "11px",
+                                                                padding: "3px 6px",
+                                                                backgroundColor: "#eb9a21",
+                                                                borderRadius: "20px",
+                                                            }}
                                                         >
                                                         -{product.discount}%
                                                         </p>
