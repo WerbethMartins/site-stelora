@@ -127,7 +127,7 @@ function ProductForm() {
                            <input name="category" type="text" placeholder="Categoria (ex: Cosmético, 3D)" required />
                         </div>
                         <div className="product-form__product-type-size">
-                            <input name="typeSize" type="text" placeholder="Tipo (Cosmético ou 3D)" required />
+                            <input name="typeSize" type="text" placeholder="Tipo (Ex: Póligono, Best Seller)" required />
                             <input name="size" type="text" placeholder="Tamanho do produto" required />
                         </div>
                         <div className="product-form__product-description">

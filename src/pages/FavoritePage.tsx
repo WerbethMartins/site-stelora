@@ -26,7 +26,7 @@ function FavoritePage() {
 
   const handleRemoveFavorite = async (productId: string) => {
     try {
-      await removeFromFavorites(productId);
+      removeFromFavorites(productId);
       showMessage("Produto removido dos favoritos com sucesso!");
     } catch (error) {
       console.error("Erro ao tentar excluir um favorito!", error);
@@ -45,22 +45,36 @@ function FavoritePage() {
 
         <h1 className="header__title">Favoritos</h1>
 
-        <button type="button" className="header__icon-btn" aria-label="Ver sacola de compras">
-          <CartIconWithBadge />
-          <img src={bag} alt="Sacola de produtos" />
-        </button>
+        <Link to="/cart">
+          <button type="button" className="header__icon-btn" aria-label="Ver sacola de compras">
+            <CartIconWithBadge />
+            <img src={bag} alt="Sacola de produtos" />
+          </button>
+        </Link>
       </header>
 
       <div className="favorite-page__items">
         {favItems.length === 0 ? (
-          <div className="favorite-page__empty-state">
-            <h2>Você não tem favoritos</h2>
-            <p>Navegue pelo catálogo e adicione seus produtos nos favoritos!</p>
-            <Link to="/catalog">
-              <button type="button" className="favorite-page__catalog-btn">
-                Voltar ao catálogo
-              </button>
-            </Link>
+          <div style={{ padding: "40px 20px", textAlign: "center" }}>
+              <h2>Você não tem favoritos</h2>
+              <p style={{ margin: "10px 0 20px", color: "#666" }}>
+                Navegue pelo catálogo e adicione seus produtos nos favoritos!
+              </p>
+              <Link to="/catalog">
+                <button 
+                  type="button"
+                  style={{ 
+                    backgroundColor: "#1a1a1a",
+                    color: "#fff",
+                    border: "none",
+                    padding: "12px 24px",
+                    borderRadius: "12px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Voltar ao catálogo
+                </button>
+              </Link>
           </div>
         ) : (
           favItems.map(({ product }) => {
@@ -102,7 +116,7 @@ function FavoritePage() {
                   </div>
 
                   <div className="item__button-section">
-                    <Link to={`/checkout/${product.id}`} className="button-section__link">
+                    <Link to={`/shopping-bag/${product.id}`} className="button-section__link">
                       <button type="button" className="button-section__btn">
                         Adicionar à sacola
                       </button>

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
 // Components
-import Categories from "../components/Categories";
+import Types from "../components/Types";
 import { Loading } from "../components/Loading";
 import { NotificationPopover } from "../components/NotificationPopover";
 import { ProductCard } from "../components/ProductCard";
@@ -21,17 +21,15 @@ import searchIcon from "../assets/img/search.png";
 import arrow from "../assets/img/arrow.png";
 
 function Catalog() {
-    // Parâmetros de busca da URL 
-    const [searchParams] = useSearchParams();
-    const categoryFilter = searchParams.get("category"); // Retorna '3d' ou null
-
     const { unreadCount } = useNotifications();
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const popoverRef = useRef<HTMLDivElement>(null);
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
-    const [selectedCategory, setSelectedCategory] = useState("All");
+    const [selectedType, setSelectedType] = useState("All");
     const [searchQuery, setsearchQuery] = useState("");
+    const [searchParams] = useSearchParams();
+    const urlCategory = searchParams.get("category")?.toLowerCase();
 
     // Fecha o popover se o usuário clicar fora
     useEffect(() => {
@@ -86,19 +84,25 @@ function Catalog() {
 
     const availableCategories = [
         "All", 
-        ...Array.from(new Set(products.map((product) => product.category).filter(Boolean)))
+        ...Array.from(new Set(products.map((product) => product.typeSize).filter(Boolean)))
     ];
 
     const filteredProducts = products.filter((product) => {
-        const matchesUrlCategory = !categoryFilter || product.category === categoryFilter;
+        const productType = product.typeSize?.toLocaleLowerCase();
 
-        const matchesSelectedCategory = selectedCategory === "All" || product.category === selectedCategory;
+        const matchesUrlType = urlCategory
+            ? productType === urlCategory
+            : productType !== "3d";
+
+        const matchesSelectedType = 
+            selectedType === "All" || 
+            product.typeSize?.toLocaleLowerCase() === selectedType?.toLocaleLowerCase();
 
         const matchesSearch = product.name
             .toLowerCase()
             .includes(searchQuery.toLowerCase());
 
-        return matchesUrlCategory && matchesSelectedCategory && matchesSearch;
+        return matchesUrlType && matchesSelectedType && matchesSearch;
     });
 
     return (
@@ -174,10 +178,10 @@ function Catalog() {
                     */}
                 </div>
 
-                <Categories
-                    categories={availableCategories}
-                    selectedCategory={selectedCategory}
-                    onSelectCategory={setSelectedCategory}
+                <Types
+                    types={availableCategories}
+                    selectedType={selectedType}
+                    onSelectType={setSelectedType}
                 />
 
                 {loading ? (

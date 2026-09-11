@@ -15,8 +15,10 @@ import { deleteProduct, type Product, toggleProductExclusive } from "../service/
 import heartOutline from "../assets/img/White heart.png"
 import heartFilled from "../assets/img/Red-heart.png";   // Ícone de coração preenchido
 import favorite from "../assets/img/estrela.png";
+import star from "../assets/img/star-3.png"
 import menuHamburguer from "../assets/img/menu-hamburguer(white).png";
 import delet from "../assets/img/close.png"
+import close from "../assets/img/cross.png";
 import { compressImage } from "../utils/CompressImage";
 
 interface ProductCardProps {
@@ -104,6 +106,11 @@ export function ProductCard({ product }: ProductCardProps) {
         }catch(error) {
             showMessage("Erro ao remover o destaque.");
         }
+    }
+
+    const handleCloseExclusivForm = () => {
+        setFormProductExclusive(false);
+        setSelectedProductForExclusive(null);
     }
 
     const handleStarClick = (product: Product) => {
@@ -253,19 +260,36 @@ export function ProductCard({ product }: ProductCardProps) {
 
             {/* Formulário indepêndente */}    
             {formProductExclusive && (
-                <div className="catalog__exclusive-form">
-                    <h2 className="exlusive-form__title">Produto Destaque</h2>
-                    <form className="exclusive-form__title">
-                        <p style={{color: "#eb9a21", fontSize: "1.4rem", borderBottom: "1px solid #ccc"}}>Escolha imagem de destaque</p>
-                        <input 
-                            type="file"
-                            ref={fileInputRef}
-                            accept="image/*"
-                            className="exclusive-form__img-input"
-                            onChange={handleExclusiveImageUpload}
-                        />
-                        <button type="button" className="exclusive-form__btn" onClick={() => handleStarClick(product)}>Escolher imagem</button>
-                    </form>
+                <div className="exclusive-form__overlay">
+                    <div className="product-card__exclusive-form">
+                        <div className="exclusive-form__close">
+                           <button type="button" className="close__icon"  onClick={handleCloseExclusivForm}>
+                                 <img
+                                    style={{ width: "40px", height: "40px" }} 
+                                    src={close} 
+                                    alt="Icone de close" 
+                                />
+                           </button>
+                        </div>
+                        <div className="exlusive-form__icon">
+                            <img src={star} className="icon__start" alt="Icone de estrela" />
+                        </div>
+                        <div className="exclusive-form__title">
+                            <h2 style={{color: "#eb9a21"}}>IMAGEM DE DESTAQUE</h2>
+                            <p style={{color: "#979494"}}>Aqui você pode escolher a imagem destaque</p>
+                        </div>
+                        <form className="exclusive-form">
+                            {/* deixar o Input escondido para upload de imagem */}
+                            <input 
+                                type="file"
+                                ref={fileInputRef}
+                                style={{ display: "none" }}
+                                accept="image/*"
+                                onChange={handleExclusiveImageUpload}
+                            />
+                            <button type="button" className="exclusive-form__btn" onClick={() => handleStarClick(product)}>Escolher imagem</button>
+                        </form>
+                    </div>
                 </div>
             )}
 

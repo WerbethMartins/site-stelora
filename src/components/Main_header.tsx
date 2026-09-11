@@ -97,11 +97,6 @@ function Header() {
                                 Catalogo
                             </Link>
                         </li>
-                        <li className="menu-links__item">
-                            <Link to="/catalog?category=3d" aria-label="Ir para os modelos 3D">
-                                3D Modelos
-                            </Link>
-                        </li>
                     </ul>
                 </div>
             )}
