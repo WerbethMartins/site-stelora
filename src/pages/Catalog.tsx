@@ -55,7 +55,7 @@ function Catalog() {
                 setLoading(true);
                 const data = await getProducts();
 
-                await new Promise((resolve) => setTimeout(resolve, 2000));
+                await new Promise((resolve) => setTimeout(resolve, 1000));
 
                 setProducts(data);
             }catch(error){
@@ -108,7 +108,6 @@ function Catalog() {
     return (
         <>
             <section className="catalog">
-
                 <div className="catalog__header">
                     <Link to="/">
                         <button type="button" className="catalog__back-btn">
@@ -187,7 +186,13 @@ function Catalog() {
                 {loading ? (
                     <div style={{ textAlign: "center", padding: "2rem"}}>Carregando produto</div>
                 ) : filteredProducts.length === 0 ? (
-                    <div style={{ textAlign: "center", padding: "2rem"}}>Nenhum produto encontrado.</div>
+                    <div className="product-not-found">
+                        <span className="product-not-found__code">404</span>
+                        <h2 className="product-not-found__title">Nenhum produto encontrado</h2>
+                        <p className="product-not-found__description">
+                            Não encontramos resultados para a sua busca ou filtro selecionado. Tente buscar por outros termos!
+                        </p>
+                    </div>
                 ) : (
                     <div className="catalog__grid">
                         {filteredProducts.map((product) => (

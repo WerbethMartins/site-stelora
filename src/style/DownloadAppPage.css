@@ -1,0 +1,97 @@
+.download-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    & .download-page__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 70px;
+        padding: 5px;
+        margin-top: 5px;
+        text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+
+        & .catalog__back-btn {
+            border: none;
+            background-color: #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.250); 
+        }
+    }
+
+    & .download-page__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        & .download-page__desktop-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+
+            & .download-page__img {
+                width: 400px;
+                height: 400px;
+            }
+
+            & .download-page__btn {
+                border: none;
+                border-radius: 30px;
+                color: #fff;
+                background-color: #eb9a21;
+                padding: 10px;
+                text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+                box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.250);
+            }
+        }
+    }
+
+    & .download-page__mobile-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+    }
+
+    & .download-page__android-action {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        width: auto;
+
+        & .android-action__img {
+            width: 100%;
+            height: 400px;
+            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.250); 
+        }
+
+        & .android-action__main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            width: auto;
+        }
+
+        & .download-page__install-btn {
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            background-color: #eb9a21;
+            padding: 10px;
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.250);
+        }
+    }
+}

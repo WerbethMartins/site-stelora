@@ -38,8 +38,12 @@ export function ProductCard({ product }: ProductCardProps) {
     const { showMessage } = useMessage();
     const [products, setProducts] = useState<Product[]>([]);
     const [openMenuProductId, setOpenMenuProductId] = useState<string | null>(null);
+    
+    // Favorito
     const { isFavorite, toggleFavorite } = useFavorites();
-    const favorited = product.id == null ? false : isFavorite(product.id);
+    const productId = product?.id;
+    const favorited = productId == null ? false : isFavorite(productId);
+    
     const [formProductExclusive, setFormProductExclusive] = useState(false);
     const [selectedProductForExclusive, setSelectedProductForExclusive] = useState<Product | null>(null);
 

@@ -8,7 +8,7 @@ import { CartIconWithBadge } from "./CartIconWithBadge";
 // Imagens
 import close from "../assets/img/icons8-excluir-30.png";
 import hamburguer from "../assets/img/menu-hamburguer(white).png";
-import shoppingBag from "../assets/img/shopping-bag (white heart).png";
+import shoppingBag from "../assets/img/shopping-bag.png";
 import userIcon from "../assets/img/user.png";
 import addProduct from "../assets/img/Add(2).png";
 
@@ -47,16 +47,18 @@ function Header() {
                 <div className="icon-group__icons">
                     {isLoggedIn && (
                         <Link to="/cart" aria-label="Abrir sacola de compras">
-                            <div className="icon-group__shopping_bag">
+                            <button type="button" className="icon-group__shopping_bag">
                                 <CartIconWithBadge />
-                                <img src={shoppingBag} alt="Shopping Bag" className="nav_icon" />
-                            </div>
+                                <img
+                                    src={shoppingBag} 
+                                    alt="Shopping Bag" />
+                            </button>
                         </Link>
                     )}
 
-                    <div className="icon-group__user-btn" onClick={toggleUserSection}>
+                    <button className="icon-group__user-btn" onClick={toggleUserSection}>
                         <img src={userIcon} alt="User Icon" />
-                    </div>
+                    </button>
                 </div>
             </div>
 

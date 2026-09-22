@@ -22,6 +22,7 @@ import Login from "./pages/Login_page";
 import RegisterPage from "./pages/Register_page";
 import ShoppingBag from "./pages/Shopping_bag";
 import FavoritePage from "./pages/FavoritePage";
+import { DownloadAppPage } from "./pages/DownloadAppPage";
 
 const googleClientId = "119000959574-ecjit86tbv5vb7ft54msq91au7p4rs6v.apps.googleusercontent.com";
 
@@ -35,6 +36,7 @@ function AppRoutes() {
     if (!user) {
         return (
             <Routes>
+                <Route path="/download-app" element={< DownloadAppPage/>} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/forget-password" element={<ForgetPasswordPage />} />
@@ -45,6 +47,7 @@ function AppRoutes() {
 
     return (
         <Routes>
+            <Route path="/download-app" element={< DownloadAppPage/>} />
             <Route path="/" element={<Home />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/checkout/:id" element={<Checkout />} />

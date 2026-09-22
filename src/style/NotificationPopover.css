@@ -103,7 +103,7 @@
   }
 }
 
-& .notification-item {
+.notification-item {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -115,10 +115,6 @@
   &:hover {
     color: #fff;
     background-color: #eb9a21;
-  }
-
-  & .notification-item--unread {
-    background-color: #fffdf8;
   }
 
   & .notification-item__content{
@@ -148,6 +144,19 @@
     border-radius: 50%;
     flex-shrink: 0;
   }
+}
+
+.notification-item--unread {
+  background-color: #fffdf8;
+}
+
+.notification-item--disabled {
+  cursor: default;
+}
+
+.notification-item--disabled:hover {
+  color: inherit;
+  background-color: transparent;
 }
 
 /* Animação para chamar atenção no ícone do sino */

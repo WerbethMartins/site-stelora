@@ -118,29 +118,8 @@ function Shopping_bag() {
                                             <div className="discount">
                                                 {product.discount ? (
                                                     <>
-                                                        <p
-                                                            style={{
-                                                                color: "white",
-                                                                fontSize: "11px",
-                                                                padding: "3px 6px",
-                                                                backgroundColor: "#eb9a21",
-                                                                borderRadius: "20px",
-                                                            }}
-                                                        >
-                                                        -{product.discount}%
-                                                        </p>
-
-                                                        <p
-                                                        style={{
-                                                            color: "grey",
-                                                            fontSize: "15px",
-                                                            textAlign: "center",
-                                                            backgroundColor: "transparent",
-                                                            textDecoration: "line-through",
-                                                        }}
-                                                        >
-                                                        {formatCurrency(product.price)}
-                                                        </p>
+                                                        <span  className="discount_tag">-{product.discount}%</span>
+                                                        <span className="discount__original-price">{formatCurrency(product.price)}</span>
                                                     </>
                                                 ): null}
                                             </div>

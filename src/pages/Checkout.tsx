@@ -7,27 +7,40 @@ import { CartIconWithBadge } from "../components/CartIconWithBadge";
 // Images
 import arrow from "../assets/img/white_back.png";
 import heartOutline from "../assets/img/White heart.png";
+import heartFilled from "../assets/img/Red-heart.png";
 import shopping_bag from "../assets/img/shopping-bag.png";
 import more from "../assets/img/plus-sign.png";
 import less from "../assets/img/minus.png";
+import Printer from "../assets/img/3d-printing.png";
 
 // Service e Context
 import { type Product, getProducts } from "../service/ProductService";
 import { useCart } from "../context/CartContext";
 import { useMessage } from "../hooks/useMessage";
 import { Loading } from "../components/Loading";
+import { useFavorites } from "../context/FavoriteContext";
 
 function Checkout() {
     // Pega o id vindo da URL (ex: /checkout/1)
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const { addToCart } = useCart();
-    const { showSuccess } = useMessage();
-    const [loading, setLoading] = useState<boolean>(true);
+    const { id } = useParams(); 
 
     // Busca o produto cujo id coincide com o id da URL
+    const [products, setProduct] = useState<Product[]>([]);
+    
+    const product = products.find((item) => String(item.id) === String(id));
+
+    // Controle de estado do favorito
+    const { isFavorite, toggleFavorite } = useFavorites();
+    const productId = product?.id;
+    const favorited = productId == null ? false : isFavorite(productId);
+
+    const { addToCart } = useCart();
+    const { showMessage } = useMessage();
+    const [loading, setLoading] = useState<boolean>(true);
+
+    const navigate = useNavigate();
+
     // Converter para String/Number conforme o tipo do mock
-    const [product, setProduct] = useState<Product | null>(null);
     const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
@@ -36,8 +49,7 @@ function Checkout() {
             try {
                 setLoading(true);
                 const products = await getProducts();
-                const foundProduct = products.find((p) => p.id?.toString() === id);
-                setProduct(foundProduct || null);
+                setProduct(products);
             }catch(error) {
                 console.error("Erro ao buscar produto:", error)
             }finally{
@@ -54,11 +66,31 @@ function Checkout() {
 
     if (!product) {
         return (
-        <div className="not-found-container">
-            <h2>Produto não encontrado</h2>
-            <p>O produto que você procura não existe ou foi removido.</p>
-            <Link to="/catalog">Voltar ao catálogo</Link>
-        </div>
+            <div className="not-found-container">
+                <div className="not-found-icon">
+                    <img src={Printer} alt="Icone de erro 404" />
+                </div>
+
+                <span className="not-found-code">404</span>
+
+                <h2>Essa impressão não saiu como esperado...</h2>
+
+                <p>
+                    O produto que você procura não foi encontrado.
+                    Talvez ele tenha sido removido, esteja temporariamente
+                    indisponível ou o endereço esteja incorreto.
+                </p>
+
+                <div className="not-found-actions">
+                    <Link to="/catalog">
+                        <button type="button" className="btn-primary">Ver catálogo</button>
+                    </Link>
+                </div>
+
+                <small>
+                    Não se preocupe, ainda temos muitas peças esperando por você.
+                </small>
+            </div>
         );
     }
 
@@ -68,7 +100,7 @@ function Checkout() {
     // Função para adicionar ao carrinho e redirecionar
     const handleAddToCart = () => {
         addToCart(product as unknown as import("../data/mockProducts").Product, quantity);
-        showSuccess(`${quantity} item(ns) de ${product.name} adicionado(s) à sacola`);
+        showMessage(`${quantity} item(ns) de ${product.name} adicionado(s) à sacola`);
 
         // Redireciona o usuário para a sacola de compras para ver o item adicionado
         navigate("/cart");
@@ -98,8 +130,15 @@ function Checkout() {
                             <img src={arrow} alt="Voltar" />
                         </button>
                     </Link>
-                    <button type="button" className="checkout__icon-btn">
-                        <img className="heart_icon" src={heartOutline} alt="Favorite" />
+                    <button 
+                        type="button"
+                        onClick={() => {
+                            if (product.id == null) return;
+                            toggleFavorite({ ...product, id: product.id });
+                            showMessage(favorited ? "Produto removido dos favoritos!" : "Produto adicionado aos favoritos!");
+                        }}
+                        className="checkout__icon-btn" aria-label={favorited ? "Remover dos favoritos" : "Adicionar aos favoritos"} >
+                        <img className="heart_icon" src={favorited ? heartFilled : heartOutline} alt="Favorite" />
                     </button>
                 </div>
                 <div className="checkout__info">

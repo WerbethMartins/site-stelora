@@ -39,7 +39,7 @@ nav {
                 border: 1px solid #ccc;
                 border-radius: 50%;
                 background-color: #eb9a21;
-                padding: 8px;
+                padding: 5px;
                 box-shadow: 1px 2px rgba(0, 0, 0, 0.185);
             }
 
@@ -73,6 +73,7 @@ nav {
         padding: 10px; 
         width: 100%;
         top: 70px; 
+        animation: iconAnimation 0.5s ease-in-out;
 
         & .user-section__add-product {
             margin-right: 5px;
@@ -113,6 +114,7 @@ nav {
         width: 95%;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         top: 70px; 
+        animation: navHamburguerAnimation 0.5s ease-in-out;
 
         & ul {
             list-style: none;
@@ -165,5 +167,30 @@ nav {
                 }
             }
         }
+    }
+}
+
+@keyframes navHamburguerAnimation {
+    0% {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(10%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes iconAnimation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
     }
 }

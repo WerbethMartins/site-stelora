@@ -14,17 +14,19 @@ export const NotificationPopover: React.FC<Props> = ({ onClose }) => {
     const { notifications, unreadCount,markAsRead, markAllAsRead } = useNotifications();
     const [filter, setFilter] = useState<FilterType>("all");
     const navigate = useNavigate();
+    
 
     // Filtra as notificações de forma de dinamica com base na aba ativa
     const filteredNotifications = notifications.filter((item) => {
         if(filter === "unread") return !item.read;
         return true;
     })
-
+ 
     const handleNotificationClick = (id: string, productId?: string | number) => {
         markAsRead(id);
-        if (productId) {
-        navigate(`/product/${productId}`);
+
+        if (productId != null) {
+            navigate(`/checkout/${productId}`);
         }
         onClose();
     };
@@ -67,11 +69,19 @@ export const NotificationPopover: React.FC<Props> = ({ onClose }) => {
                         }
                     </p>
                     ) : (
-                    notifications.map((item) => (
+                    filteredNotifications.map((item) => (
                         <div
                             key={item.id}
-                            className={`notification-item ${!item.read ? "notification-item--unread" : ""}`}
+                            className={`notification-item ${!item.read ? "notification-item--unread" : ""} ${item.productId == null ? "notification-item--disabled" : ""}`}
                             onClick={() => handleNotificationClick(item.id, item.productId)}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(event) => {
+                                if (event.key === "Enter" || event.key === " ") {
+                                    event.preventDefault();
+                                    handleNotificationClick(item.id, item.productId);
+                                }
+                            }}
                         >
                         <div className="notification-item__content">
                             <strong>{item.title}</strong>

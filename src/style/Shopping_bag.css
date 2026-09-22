@@ -34,8 +34,8 @@
             box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.295);
 
             img {
-                width: 25px;
-                height: 25px;
+                width: 30px;
+                height: 30px;
             }
         }
     }
@@ -96,6 +96,22 @@
                             justify-content: space-between;
                             align-items: center;
                             gap: 10px;
+
+                            & .discount_tag {
+                                font-size: 11px;
+                                border-radius: 20px;
+                                color: #fff;
+                                background-color: #eb9a21;
+                                padding: 3px 6px;
+                            }
+                            
+                            & .discount__original-price {
+                                text-align: center;
+                                color: gray;
+                                font-size: 15px;
+                                background-color: transparent;
+                                text-decoration: line-through;
+                            }
                         }
                     }
 

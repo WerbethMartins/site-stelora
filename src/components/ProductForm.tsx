@@ -42,14 +42,13 @@ function ProductForm() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setLoading(true);
-        setIsSubmitting(true);
 
         if(!imageUrl){
             showMessage("Por favor, selecione uma imagem para o produto.");
             return;
         }
         
+        setLoading(true);
         setIsSubmitting(true);
         // FormData captura automaticamente todos os inputs que têm o atributo "name"
         const formData = new FormData(e.currentTarget);
@@ -69,15 +68,15 @@ function ProductForm() {
         };
 
         try{
-            await addProduct(newProduct);
+            const productId = await addProduct(newProduct);
             showMessage("produto cadastrado com sucesso!");
 
             // Dispara a notificação automática
-            addNotification(
-                "Novo Produto Cadastrado",
-                `O produto "${newProduct.name}" foi adicionado com sucesso!`,
-                new Date().toDateString()
-            );
+            addNotification({
+                title: "Novo produto cadastrado!",
+                message: `O produto "${newProduct.name}" já está disponível.`,
+                productId,
+            });
             await new Promise((resolve) => setTimeout(resolve, 2000));
 
             navigate("/catalog")

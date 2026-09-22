@@ -14,21 +14,13 @@ interface NotificationContextType {
     unreadCount: number;
     markAsRead: (id: string) => void;
     markAllAsRead: () => void;
-    addNotification: (title: string, message: string, productId?: string | number) => void;
+    addNotification: (notification: Omit<AppNotification, "id" | "date" | "read">) => void;
 }
 
 const STORAGE_KEY = "@ecommerce:notifications_v1";
 
 // Dados inicias mockados para testar a interface
-const INITIAL_NOTIFICATIONS: AppNotification[] = [
-    {
-      id: "1",
-        title: "Novo produto disponível!",
-        message: "O novo tênis esportivo acabou de chegar ao catálogo.",
-        date: "Hoje, 10:30",
-        read: false,
-        productId: 1,  
-    }, 
+const INITIAL_NOTIFICATIONS: AppNotification[] = [ 
     {
         id: "2",
         title: "Promoção relâmpago ⚡",
@@ -66,12 +58,17 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
     setNotifications((prev) => prev.map((item) => ({...item, read: true})));
   };
 
-  const addNotification = (title: string, message: string, productId?: string | number) => {
+  const addNotification = ({ title, message, productId }: Omit<AppNotification, "id" | "date" | "read">) => {
     const newNotif: AppNotification = {
         id: Date.now().toString(),
         title,
         message,
-        date: "Agora mesmo",
+        date: new Intl.DateTimeFormat("pt-BR", {
+          day: "2-digit",
+          month: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        }).format(new Date()),
         read: false,
         productId,
     };
@@ -85,7 +82,7 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
             unreadCount,
             markAsRead,
             markAllAsRead,
-            addNotification,
+            addNotification
         }}
     >
 
