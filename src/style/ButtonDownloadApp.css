@@ -1,0 +1,24 @@
+.button-Download__btn {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    width: auto;
+    top: 84%;
+    left: 82%;
+
+    & .btn {
+        border: none;
+        border-radius: 20px;
+        width: 45px;
+        height: 45px;
+    }
+
+    & .image_btn {
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        width: 45px;
+        height: 45px;
+    }
+}

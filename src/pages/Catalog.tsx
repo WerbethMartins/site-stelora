@@ -7,6 +7,7 @@ import { Loading } from "../components/Loading";
 import { NotificationPopover } from "../components/NotificationPopover";
 import { ProductCard } from "../components/ProductCard";
 import { FavoriteIconWithBadge } from "../components/FavoriteIconWithBadge";
+import  ButtonDownloadApp  from "../components/ButtonDownloadApp";
 
 //Context
 import { useNotifications } from "../context/NotificationContext";
@@ -108,6 +109,9 @@ function Catalog() {
     return (
         <>
             <section className="catalog">
+
+                <ButtonDownloadApp />
+
                 <div className="catalog__header">
                     <Link to="/">
                         <button type="button" className="catalog__back-btn">

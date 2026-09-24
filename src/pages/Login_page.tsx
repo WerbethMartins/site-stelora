@@ -15,8 +15,12 @@ import { useMessage } from "../hooks/useMessage";
 // Images
 import facebook from "../assets/img/facebook.png";
 import instagram from "../assets/img/instagram_Color.png";
+import eye_close from "../assets/img/hide.png";
+import eye_open from "../assets/img/view.png";
 
 function Login_page(){
+    const [ password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const { showMessage, showError } = useMessage();
     const navigate = useNavigate();
     const [ isLoading, setIsLoading ] = useState(false); 
@@ -75,9 +79,21 @@ function Login_page(){
                             />
                         </div>
                         <div className="input-group">
-                            <input name="password" type="password" id="password" placeholder="Digite sua senha" />
+                            <input 
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                name="password" 
+                                type={showPassword ? "text" : "password"} 
+                                id="password" 
+                                placeholder="Digite sua senha" 
+                            />
+                            <button  
+                                className="input-group__showPasswordButton"
+                                onClick={() => setShowPassword(!showPassword)}>
+                                <img src={showPassword ? eye_close : eye_open} alt="Icon para mostrar a senha" />
+                            </button>
                         </div>
-                        <div className="input-group">
+                        <div className="input-group__footer">
                             <Link to="/forget-password">Esqueceu a senha?</Link>
                             {/* O texto do botão muda, caso esteja carregando */}
                             <button type="submit" className="input-group__btn" disabled={isLoading}>

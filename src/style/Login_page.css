@@ -46,7 +46,7 @@
 
             & .input-group {
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 justify-content: flex-start;
                 align-items: center;    
                 gap: 10px;
@@ -56,9 +56,30 @@
                     border: none;
                     border-radius: 20px;
                     padding: 12px;
-                    width: 90%;
+                    width: 100%;
                     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.250);
                 }
+
+                & .input-group__showPasswordButton {
+                    position: absolute;
+                    border: none;
+                    background-color: transparent;
+                    left: 80%;
+
+                    img {
+                        width: 25px;
+                        height: 25px;
+                    }
+                }
+            }
+
+            & .input-group__footer {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;    
+                gap: 10px;
+                width: 100%;
 
                 & .input-group__btn {
                     border: none;

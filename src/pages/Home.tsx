@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../components/Main_header";
 import { useAuth } from "../context/AuthContext";
 import { getProducts, type Product } from "../service/ProductService";
+import  ButtonDownloadApp  from "../components/ButtonDownloadApp";
 
 // Images
 import crownIcon from "../assets/img/crown.png";
@@ -56,6 +57,8 @@ function Home() {
             }}
         >
             <Header />
+
+            <ButtonDownloadApp />
 
             <div className="hero__container">
                 <div className="hero__badge">

@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useIsMobile } from "../hooks/useIsMobile";
 
+// Images
 import arrow from "../assets/img/arrow.png";
 import download_logo from "../assets/img/Logo_download.png";
+import accept from "../assets/img/accept.png";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
@@ -98,8 +100,8 @@ export function DownloadAppPage() {
           <div className="download-page__mobile-card">
             {isInstalled ? (
               <div className="download-page__status">
-                <span className="status__icon">✅</span>
-                <h2>Aplicativo Já Instalado!</h2>
+                <img className="status__img" src={accept} alt="Icone de download concluido" />
+                <h1>Aplicativo Já Instalado!</h1>
                 <p>Você já pode acessar o app diretamente pela tela de início do seu celular.</p>
               </div>
             ) : isIOS ? (
