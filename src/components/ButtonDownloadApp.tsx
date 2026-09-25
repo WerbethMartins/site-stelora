@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Images
 import download_icon from "../assets/img/Logo_download.png";

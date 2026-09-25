@@ -99,6 +99,13 @@ function Header() {
                                 Catalogo
                             </Link>
                         </li>
+                        {user && (
+                            <li className="menu-links__item">
+                                <Link to="" aria-label="Ir para meus pedidos">
+                                    Meus Pedidos
+                                </Link>
+                            </li>
+                        )}
                     </ul>
                 </div>
             )}

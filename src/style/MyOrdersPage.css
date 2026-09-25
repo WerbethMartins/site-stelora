@@ -1,0 +1,112 @@
+.orders__section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+    color: #ffffff;
+    background-color: #0000;
+    padding: 0 10px;
+    width: 100%;
+    height: auto;
+
+    & .orders__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 5px;
+        margin-top: 5px;
+        width: 100%;
+        text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+
+        & .orders__back-btn {
+            border: none;
+            background-color: #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.250);
+        }
+
+        & .orders__header-title-group {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 75%;
+
+            & .orders-header__icon-btn {
+                border: none;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.250);
+
+                & .orders-header__icon {
+                    border: none;
+                    background-color: none;
+                }
+            }
+        }
+    }
+
+    & .orders-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 10px;
+        color: #ffffff;
+        background-color: #0000;
+        padding: 0 10px;
+        width: 100%;
+        height: auto;
+
+        & .orders-body__header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 5px;
+            width: 100%;
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+
+            & .header__status {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: flex-start;
+                gap: 10px;
+                padding: 5px;
+
+                & .header-status__btn {
+                    border: 1px solid #ccc;
+                    border-radius: 10px;
+                    padding: 5px;
+                }
+            }
+        }
+    }
+
+    & .orders-body__card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-top: 5px;
+        width: 100%;
+        text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+
+        & .card__header {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 5px;
+        }
+    }
+}
