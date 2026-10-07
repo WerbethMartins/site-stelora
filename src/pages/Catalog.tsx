@@ -169,7 +169,7 @@ function Catalog() {
                         <img src={searchIcon} className="catalog__search-icon" alt="Pesquisar" />
                         <input 
                             type="text"
-                            placeholder="Pesquisar Produtos..."
+                            placeholder="Pesquisar produtos..."
                             value={searchQuery}
                             onChange={(e) => setsearchQuery(e.target.value)}
                             className="catalog__search-input" 

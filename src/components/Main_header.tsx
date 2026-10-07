@@ -101,7 +101,7 @@ function Header() {
                         </li>
                         {user && (
                             <li className="menu-links__item">
-                                <Link to="" aria-label="Ir para meus pedidos">
+                                <Link to="/orders" aria-label="Ir para meus pedidos">
                                     Meus Pedidos
                                 </Link>
                             </li>

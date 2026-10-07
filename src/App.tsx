@@ -54,7 +54,7 @@ function AppRoutes() {
             <Route path="/checkout/:id" element={<Checkout />} />
             <Route path="/cart" element={<ShoppingBag />} />
             <Route path="/favorites" element={<FavoritePage />} />
-            <Route path="/Orders" element={<MyOrdersPage />} />
+            <Route path="/orders" element={<MyOrdersPage />} />
             <Route
                 path="/admin/product-form"
                 element={isAdmin ? <ProductForm /> : <Navigate to="/" replace />}

@@ -1,0 +1,17 @@
+.order-card {
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.575);
+
+    & .order-card__btn-transit {
+        border: none;
+        border-radius: 15px;
+        padding: 5px;
+    }
+
+    & .order-card__btn-finish {
+        border: none;
+        border-radius: 15px;
+        color: #fff;
+        background-color: #08c9b9;
+        padding: 10px;
+    }
+}
