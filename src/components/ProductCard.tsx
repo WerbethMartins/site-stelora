@@ -221,6 +221,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 ): (
                     <div className="favorite-icon">
                         <button
+                            className="product-card__icon"
                             type="button"
                             onClick={() => {
                                 if (product.id == null) return;
@@ -228,7 +229,12 @@ export function ProductCard({ product }: ProductCardProps) {
                                 showMessage(favorited ? "Produto removido dos favoritos!" : "Produto adicionado aos favoritos!");
                             }} 
                             aria-label={favorited ? "Remover dos favoritos" : "Adicionar aos favoritos"} >
-                                <img className="heart_icon product-card__icon" src={favorited ? heartFilled : heartOutline} alt="Favorite" />
+                                <img 
+                                    style={{width: "20px", height: "20px"}}
+                                    className="heart_icon" 
+                                    src={favorited ? heartFilled : heartOutline} 
+                                    alt="Favorite" 
+                                />
                         </button>
                     </div>
                 )}

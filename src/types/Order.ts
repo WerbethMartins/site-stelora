@@ -19,12 +19,13 @@ export interface Address {
   recipientName: string;
 }
 
-export type OrderStatus = "IN_PROCESS" | "IN_TRANSIT" |"FINISHED" | "CANCELED";
+export type OrderStatus = "PENDING_PAYMENT" | "IN_PROCESS" | "IN_TRANSIT" |"FINISHED" | "CANCELED";
 
 export interface Order {
   id: string;
   userId: string,
   userName?: string;
+  paymentId?: string;
   status: OrderStatus;
   statusLabel: string; 
   createdAt: string; 

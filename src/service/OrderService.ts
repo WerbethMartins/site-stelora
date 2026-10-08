@@ -19,10 +19,11 @@ import { type Order, type OrderStatus } from "../types/Order";
 
 
 export const STATUS_LABELS: Record<OrderStatus, string> = {
-  IN_PROCESS: "Em Processo",
-  IN_TRANSIT: "Em Transporte",
-  FINISHED: "Concluído",
-  CANCELED: "Cancelado"
+    PENDING_PAYMENT: "Aguardando Pagamento",
+    IN_PROCESS: "Em Processo",
+    IN_TRANSIT: "Em Transporte",
+    FINISHED: "Concluído",
+    CANCELED: "Cancelado"
 };
 
 export const OrderService = {
@@ -31,8 +32,8 @@ export const OrderService = {
         try{
             const docRef = await addDoc(collection(db, "orders"), {
                 ...orderData,
-                status: "IN_PROCESS",
-                statusLabel: STATUS_LABELS.IN_PROCESS,
+                status: "PENDING_PAYMENT",
+                statusLabel: STATUS_LABELS.PENDING_PAYMENT,
                 createdAt: serverTimestamp(),
             });
 

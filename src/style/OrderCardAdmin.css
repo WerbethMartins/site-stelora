@@ -4,7 +4,7 @@
     & .order-card__btn-transit {
         border: none;
         border-radius: 15px;
-        padding: 5px;
+        padding: 4px;
     }
 
     & .order-card__btn-finish {
@@ -12,6 +12,6 @@
         border-radius: 15px;
         color: #fff;
         background-color: #08c9b9;
-        padding: 10px;
+        padding: 4px;
     }
 }

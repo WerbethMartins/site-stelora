@@ -351,7 +351,7 @@ function MyOrdersPage() {
                                                     <img className="shipping-date__img" src={truck2} alt="Entrega" />
                                                     <p>Entrega |</p>
                                                     <span className="shipping-date__date">
-                                                        {order.estimatedDelivery || "Em transporte"}
+                                                        {order.estimatedDelivery ? order.estimatedDelivery : "Entregue"}
                                                     </span>
                                                 </div>
                                             </div>
